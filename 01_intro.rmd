@@ -1,0 +1,93 @@
+# Introduction
+
+## What is Survival Analysis
+
+- Survival analysis, survival times, factors influencing survival times
+
+## What you need to know to use this book
+
+## Survival Data and Censoring
+
+- response variable, time-to-event, is a non-negative discrete or continuous random variable
+- censoring, right censoring, results when the final endpoint is only known to exceed a particular value
+
+- $T^*$ is a random variable representing the time to failure
+- U is a random variable representing the time to a censoring event
+- what we observe is $T=min(T^*,U)$ and a censoring indicator $\delta=I[T^*<U]$. $\delta$ is 0 when T is a censored time, or 1 when T is observed.
+
+right-censoring, left-censoring (less common)
+
+Three types:
+- Type I, the censoring times are pre-specified
+- Type II, follow-up stops when a pre-specified fraction have failed
+- Random. Patient dropout. Competing events. Administrative censoring.
+
+Example 1.1. clinial trail; accural period + follow-up period
+
+![](./images/figure1.1-figure1.2-table1.1.png)
+
+administrative censoring; patient dropout: non-informative (unrelated) vs informative (related to the failure process)
+
+The goals of surivival analysis
+
+- estimate the survival distribution
+- compare two or more survival distributions
+- assess the effects of a number of factors on survival
+
+## Some examples of survival data sets
+
+Example 1.2. Xelox (chemotherapy drug) in patients with advanced gastric (胃) cancer
+
+Progression-free survival: the time from entry into the clinical trial until progression or death, whichever comes first
+
+Wang et al. Cancer Chemother. Pharmacol 2014
+
+```{r}
+#install.packages("asaur")
+library(asaur)
+gastricXelox[23:27,]
+```
+
+Example 1.3 Pancreatic cancer (胰腺癌) in patients with locally advanced or metastatic disease
+
+Moss et al., Gastrointest. Cancer Res. 2012
+
+```{r}
+head(pancreatic)
+
+### stage column: M means metastatic; LA means locally advanced
+```
+
+Example 1.4 survival prospects of prostate cancer patients (前列腺癌) with high-risk disease
+
+Lu-Yao et al., J. Am. Med. Assoc, 2009
+
+```{r}
+prostateSurvival[88:95,]
+### grade: poorly or moderately differentiated
+### cancer stage: T1c if screen-diagnosed using a prostate-specific antigen blood test, T1ab if clinically diagnosed without screening, or T2 if palpable at diagnosis
+### surival time: days from diagnosis to death or date last seen
+### status: 1 if died of prostate cancer, 2 if died of some other cause, or 0 still alive at the date last seen
+```
+
+Example 1.5 Comparison of medical therapies to aid smokers to quit
+
+triple-mdication combination vs therapy with the nicotine patch alone
+
+time from randomization until relapse (return to smoking); censored at six months
+
+Steinberg Ann. Intern. Med 2009
+
+```{r}
+pharmacoSmoking[1:6, 2:8]
+# ttr: time to relapse/the number of days without smoking
+# employment: ft (full time), pt (part time), or other
+```
+
+Example 1.6 Prediction of survival of hepatocellular carcinoma (肝细胞癌) patients using biomarkers
+
+```{r}
+hepatoCellular[c(1,2,3,65,71),c(2,3,16:20,24,47)]
+# OS: overall survival
+# RFS: recurrence-free survival
+```

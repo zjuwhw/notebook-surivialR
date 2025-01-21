@@ -1,0 +1,10 @@
+bookdown::gitbook:
+  config:
+    toc:
+      collapse: none
+      before: |
+        <li><a href="./">Notebook for Applied Survival Analysis using R</a></li>
+      after: |
+        Published with <a href="https://github.com/rstudio/bookdown" target="blank">bookdown</a> by <a href="http://zjuwhw.github.io/" target="blank">zjuwhw</a>
+bookdown::html_book:
+  css: toc.css

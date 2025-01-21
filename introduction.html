@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Introduction | _main.knit</title>
+  <meta name="description" content="" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Introduction | _main.knit" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Introduction | _main.knit" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="basic-principles-of-survival-analysis.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Notebook for Applied Survival Analysis using R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#what-is-survival-analysis"><i class="fa fa-check"></i><b>1.1</b> What is Survival Analysis</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#what-you-need-to-know-to-use-this-book"><i class="fa fa-check"></i><b>1.2</b> What you need to know to use this book</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#survival-data-and-censoring"><i class="fa fa-check"></i><b>1.3</b> Survival Data and Censoring</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#some-examples-of-survival-data-sets"><i class="fa fa-check"></i><b>1.4</b> Some examples of survival data sets</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html"><i class="fa fa-check"></i><b>2</b> Basic Principles of Survival Analysis</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#hazard-and-survival-functions"><i class="fa fa-check"></i><b>2.1</b> Hazard and Survival Functions</a></li>
+<li class="chapter" data-level="2.2" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#other-representations-of-a-survival-distribution"><i class="fa fa-check"></i><b>2.2</b> Other Representations of a Survival Distribution</a></li>
+<li class="chapter" data-level="2.3" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#mean-and-median-survival-time"><i class="fa fa-check"></i><b>2.3</b> Mean and Median Survival Time</a></li>
+<li class="chapter" data-level="2.4" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#parametric-survival-distributions"><i class="fa fa-check"></i><b>2.4</b> Parametric Survival Distributions</a></li>
+<li class="chapter" data-level="2.5" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#computing-the-survival-function-from-the-hazard-function"><i class="fa fa-check"></i><b>2.5</b> Computing the Survival Function from the Hazard Function</a></li>
+</ul></li>
+<li class="divider"></li>
+Published with <a href="https://github.com/rstudio/bookdown" target="blank">bookdown</a> by <a href="http://zjuwhw.github.io/" target="blank">zjuwhw</a>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> Introduction<a href="introduction.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="what-is-survival-analysis" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> What is Survival Analysis<a href="introduction.html#what-is-survival-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Survival analysis, survival times, factors influencing survival times</li>
+</ul>
+</div>
+<div id="what-you-need-to-know-to-use-this-book" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> What you need to know to use this book<a href="introduction.html#what-you-need-to-know-to-use-this-book" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="survival-data-and-censoring" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Survival Data and Censoring<a href="introduction.html#survival-data-and-censoring" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>response variable, time-to-event, is a non-negative discrete or continuous random variable</p></li>
+<li><p>censoring, right censoring, results when the final endpoint is only known to exceed a particular value</p></li>
+<li><p><span class="math inline">\(T^*\)</span> is a random variable representing the time to failure</p></li>
+<li><p>U is a random variable representing the time to a censoring event</p></li>
+<li><p>what we observe is <span class="math inline">\(T=min(T^*,U)\)</span> and a censoring indicator <span class="math inline">\(\delta=I[T^*&lt;U]\)</span>. <span class="math inline">\(\delta\)</span> is 0 when T is a censored time, or 1 when T is observed.</p></li>
+</ul>
+<p>right-censoring, left-censoring (less common)</p>
+<p>Three types:
+- Type I, the censoring times are pre-specified
+- Type II, follow-up stops when a pre-specified fraction have failed
+- Random. Patient dropout. Competing events. Administrative censoring.</p>
+<p>Example 1.1. clinial trail; accural period + follow-up period</p>
+<p><img src="images/figure1.1-figure1.2-table1.1.png" /></p>
+<p>administrative censoring; patient dropout: non-informative (unrelated) vs informative (related to the failure process)</p>
+<p>The goals of surivival analysis</p>
+<ul>
+<li>estimate the survival distribution</li>
+<li>compare two or more survival distributions</li>
+<li>assess the effects of a number of factors on survival</li>
+</ul>
+</div>
+<div id="some-examples-of-survival-data-sets" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Some examples of survival data sets<a href="introduction.html#some-examples-of-survival-data-sets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Example 1.2. Xelox (chemotherapy drug) in patients with advanced gastric (胃) cancer</p>
+<p>Progression-free survival: the time from entry into the clinical trial until progression or death, whichever comes first</p>
+<p>Wang et al. Cancer Chemother. Pharmacol 2014</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;asaur&quot;)</span></span>
+<span id="cb1-2"><a href="introduction.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(asaur)</span>
+<span id="cb1-3"><a href="introduction.html#cb1-3" aria-hidden="true" tabindex="-1"></a>gastricXelox[<span class="dv">23</span><span class="sc">:</span><span class="dv">27</span>,]</span></code></pre></div>
+<pre><code>##    timeWeeks delta
+## 23        42     1
+## 24        43     1
+## 25        43     0
+## 26        46     1
+## 27        48     0</code></pre>
+<p>Example 1.3 Pancreatic cancer (胰腺癌) in patients with locally advanced or metastatic disease</p>
+<p>Moss et al., Gastrointest. Cancer Res. 2012</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pancreatic)</span></code></pre></div>
+<pre><code>##   stage    onstudy progression      death
+## 1     M 12/16/2005    2/2/2006 10/19/2006
+## 2     M   1/6/2006   2/26/2006  4/19/2006
+## 3    LA   2/3/2006    8/2/2006  1/19/2007
+## 4     M  3/30/2006           .  5/11/2006
+## 5    LA  4/27/2006   3/11/2007  5/29/2007
+## 6     M   5/7/2006   6/25/2006 10/11/2006</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="introduction.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">### stage column: M means metastatic; LA means locally advanced</span></span></code></pre></div>
+<p>Example 1.4 survival prospects of prostate cancer patients (前列腺癌) with high-risk disease</p>
+<p>Lu-Yao et al., J. Am. Med. Assoc, 2009</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction.html#cb6-1" aria-hidden="true" tabindex="-1"></a>prostateSurvival[<span class="dv">88</span><span class="sc">:</span><span class="dv">95</span>,]</span></code></pre></div>
+<pre><code>##    grade stage ageGroup survTime status
+## 88  poor    T2    75-79       33      0
+## 89  mode    T2    75-79        6      0
+## 90  mode   T1c    75-79       15      2
+## 91  mode    T2    70-74        6      2
+## 92  mode  T1ab      80+       93      1
+## 93  poor    T2      80+       60      2
+## 94  mode    T2      80+        1      0
+## 95  mode  T1ab    75-79       34      0</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="introduction.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">### grade: poorly or moderately differentiated</span></span>
+<span id="cb8-2"><a href="introduction.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">### cancer stage: T1c if screen-diagnosed using a prostate-specific antigen blood test, T1ab if clinically diagnosed without screening, or T2 if palpable at diagnosis</span></span>
+<span id="cb8-3"><a href="introduction.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">### surival time: days from diagnosis to death or date last seen</span></span>
+<span id="cb8-4"><a href="introduction.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">### status: 1 if died of prostate cancer, 2 if died of some other cause, or 0 still alive at the date last seen</span></span></code></pre></div>
+<p>Example 1.5 Comparison of medical therapies to aid smokers to quit</p>
+<p>triple-mdication combination vs therapy with the nicotine patch alone</p>
+<p>time from randomization until relapse (return to smoking); censored at six months</p>
+<p>Steinberg Ann. Intern. Med 2009</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction.html#cb9-1" aria-hidden="true" tabindex="-1"></a>pharmacoSmoking[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>]</span></code></pre></div>
+<pre><code>##   ttr relapse         grp age gender     race employment
+## 1 182       0   patchOnly  36   Male    white         ft
+## 2  14       1   patchOnly  41   Male    white      other
+## 3   5       1 combination  25 Female    white      other
+## 4  16       1 combination  54   Male    white         ft
+## 5   0       1 combination  45   Male    white      other
+## 6 182       0 combination  43   Male hispanic         ft</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introduction.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ttr: time to relapse/the number of days without smoking</span></span>
+<span id="cb11-2"><a href="introduction.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># employment: ft (full time), pt (part time), or other</span></span></code></pre></div>
+<p>Example 1.6 Prediction of survival of hepatocellular carcinoma (肝细胞癌) patients using biomarkers</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introduction.html#cb12-1" aria-hidden="true" tabindex="-1"></a>hepatoCellular[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">65</span>,<span class="dv">71</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">16</span><span class="sc">:</span><span class="dv">20</span>,<span class="dv">24</span>,<span class="dv">47</span>)]</span></code></pre></div>
+<pre><code>##    Age Gender OS Death RFS Recurrence   CXCL17T CD4N     Ki67
+## 1   57      0 83     0  13          1 113.94724    0  6.04350
+## 2   58      1 81     0  81          0  54.07154   NA       NA
+## 3   65      1 79     0  79          0  22.18883   NA       NA
+## 65  38      1  5     1   5          1 106.78169    0 44.24411
+## 71  57      1 11     1  11          1  98.49680    0 99.59232</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="introduction.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># OS: overall survival</span></span>
+<span id="cb14-2"><a href="introduction.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># RFS: recurrence-free survival</span></span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="basic-principles-of-survival-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
