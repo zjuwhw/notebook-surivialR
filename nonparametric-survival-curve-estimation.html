@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1 Introduction | _main.knit</title>
+  <title>3 Nonparametric Survival Curve Estimation | _main.knit</title>
   <meta name="description" content="" />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1 Introduction | _main.knit" />
+  <meta property="og:title" content="3 Nonparametric Survival Curve Estimation | _main.knit" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1 Introduction | _main.knit" />
+  <meta name="twitter:title" content="3 Nonparametric Survival Curve Estimation | _main.knit" />
   
   
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="basic-principles-of-survival-analysis.html"/>
+<link rel="prev" href="basic-principles-of-survival-analysis.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -178,106 +178,57 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">1</span> Introduction<a href="introduction.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="what-is-survival-analysis" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> What is Survival Analysis<a href="introduction.html#what-is-survival-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="nonparametric-survival-curve-estimation" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> Nonparametric Survival Curve Estimation<a href="nonparametric-survival-curve-estimation.html#nonparametric-survival-curve-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="nonparametric-estimation-of-the-survival-function" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Nonparametric Estimation of the Survival Function<a href="nonparametric-survival-curve-estimation.html#nonparametric-estimation-of-the-survival-function" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>product-limit estimator/Kaplan-Meier estimator (Kaplan and Meier, 1958): the product over the failure times of the conditional probabilities of surviving to the next failure time,</p>
+<p><span class="math display">\[\hat{S}(t)=\prod_{t_i \le t}(1-\hat{q}_i) = \prod_{t_i \le t}(1-\frac{d_i}{n_i})\]</span></p>
+<p>, where</p>
 <ul>
-<li>Survival analysis, survival times, factors influencing survival times</li>
+<li><span class="math inline">\(n_i\)</span> is the number of subjects at risk at time <span class="math inline">\(t_i\)</span></li>
+<li><span class="math inline">\(d_i\)</span> is the number of individuals who fail at that time.</li>
 </ul>
-</div>
-<div id="what-you-need-to-know-to-use-this-book" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> What you need to know to use this book<a href="introduction.html#what-you-need-to-know-to-use-this-book" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-</div>
-<div id="survival-data-and-censoring" class="section level2 hasAnchor" number="1.3">
-<h2><span class="header-section-number">1.3</span> Survival Data and Censoring<a href="introduction.html#survival-data-and-censoring" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ul>
-<li><p>response variable, time-to-event, is a non-negative discrete or continuous random variable</p></li>
-<li><p>censoring, right censoring, results when the final endpoint is only known to exceed a particular value</p></li>
-<li><p><span class="math inline">\(T^*\)</span> is a random variable representing the time to failure</p></li>
-<li><p>U is a random variable representing the time to a censoring event</p></li>
-<li><p>what we observe is <span class="math inline">\(T=min(T^*,U)\)</span> and a censoring indicator <span class="math inline">\(\delta=I[T^*&lt;U]\)</span>. <span class="math inline">\(\delta\)</span> is 0 when T is a censored time, or 1 when T is observed.</p></li>
-</ul>
-<p>right-censoring, left-censoring (less common)</p>
-<p>Three types:
-- Type I, the censoring times are pre-specified
-- Type II, follow-up stops when a pre-specified fraction have failed
-- Random. Patient dropout. Competing events. Administrative censoring.</p>
-<p>Example 1.1. clinial trail; accural period + follow-up period</p>
-<p><img src="images/figure1.1-figure1.2-table1.1.png" /></p>
-<p>administrative censoring; patient dropout: non-informative (unrelated) vs informative (related to the failure process)</p>
-<p>The goals of surivival analysis</p>
-<ul>
-<li>estimate the survival distribution</li>
-<li>compare two or more survival distributions</li>
-<li>assess the effects of a number of factors on survival</li>
-</ul>
-</div>
-<div id="some-examples-of-survival-data-sets" class="section level2 hasAnchor" number="1.4">
-<h2><span class="header-section-number">1.4</span> Some examples of survival data sets<a href="introduction.html#some-examples-of-survival-data-sets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Example 1.2. Xelox (chemotherapy drug) in patients with advanced gastric (胃) cancer</p>
-<p>Progression-free survival: the time from entry into the clinical trial until progression or death, whichever comes first</p>
-<p>Wang et al. Cancer Chemother. Pharmacol 2014</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;asaur&quot;)</span></span>
-<span id="cb1-2"><a href="introduction.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(asaur)</span>
-<span id="cb1-3"><a href="introduction.html#cb1-3" aria-hidden="true" tabindex="-1"></a>gastricXelox[<span class="dv">23</span><span class="sc">:</span><span class="dv">27</span>,]</span></code></pre></div>
-<pre><code>##    timeWeeks delta
-## 23        42     1
-## 24        43     1
-## 25        43     0
-## 26        46     1
-## 27        48     0</code></pre>
-<p>Example 1.3 Pancreatic cancer (胰腺癌) in patients with locally advanced or metastatic disease</p>
-<p>Moss et al., Gastrointest. Cancer Res. 2012</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pancreatic)</span></code></pre></div>
-<pre><code>##   stage    onstudy progression      death
-## 1     M 12/16/2005    2/2/2006 10/19/2006
-## 2     M   1/6/2006   2/26/2006  4/19/2006
-## 3    LA   2/3/2006    8/2/2006  1/19/2007
-## 4     M  3/30/2006           .  5/11/2006
-## 5    LA  4/27/2006   3/11/2007  5/29/2007
-## 6     M   5/7/2006   6/25/2006 10/11/2006</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="introduction.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">### stage column: M means metastatic; LA means locally advanced</span></span></code></pre></div>
-<p>Example 1.4 survival prospects of prostate cancer patients (前列腺癌) with high-risk disease</p>
-<p>Lu-Yao et al., J. Am. Med. Assoc, 2009</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction.html#cb6-1" aria-hidden="true" tabindex="-1"></a>prostateSurvival[<span class="dv">88</span><span class="sc">:</span><span class="dv">95</span>,]</span></code></pre></div>
-<pre><code>##    grade stage ageGroup survTime status
-## 88  poor    T2    75-79       33      0
-## 89  mode    T2    75-79        6      0
-## 90  mode   T1c    75-79       15      2
-## 91  mode    T2    70-74        6      2
-## 92  mode  T1ab      80+       93      1
-## 93  poor    T2      80+       60      2
-## 94  mode    T2      80+        1      0
-## 95  mode  T1ab    75-79       34      0</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="introduction.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">### grade: poorly or moderately differentiated</span></span>
-<span id="cb8-2"><a href="introduction.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">### cancer stage: T1c if screen-diagnosed using a prostate-specific antigen blood test, T1ab if clinically diagnosed without screening, or T2 if palpable at diagnosis</span></span>
-<span id="cb8-3"><a href="introduction.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">### surival time: days from diagnosis to death or date last seen</span></span>
-<span id="cb8-4"><a href="introduction.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">### status: 1 if died of prostate cancer, 2 if died of some other cause, or 0 still alive at the date last seen</span></span></code></pre></div>
-<p>Example 1.5 Comparison of medical therapies to aid smokers to quit</p>
-<p>triple-mdication combination vs therapy with the nicotine patch alone</p>
-<p>time from randomization until relapse (return to smoking); censored at six months</p>
-<p>Steinberg Ann. Intern. Med 2009</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction.html#cb9-1" aria-hidden="true" tabindex="-1"></a>pharmacoSmoking[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>]</span></code></pre></div>
-<pre><code>##   ttr relapse         grp age gender     race employment
-## 1 182       0   patchOnly  36   Male    white         ft
-## 2  14       1   patchOnly  41   Male    white      other
-## 3   5       1 combination  25 Female    white      other
-## 4  16       1 combination  54   Male    white         ft
-## 5   0       1 combination  45   Male    white      other
-## 6 182       0 combination  43   Male hispanic         ft</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introduction.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ttr: time to relapse/the number of days without smoking</span></span>
-<span id="cb11-2"><a href="introduction.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># employment: ft (full time), pt (part time), or other</span></span></code></pre></div>
-<p>Example 1.6 Prediction of survival of hepatocellular carcinoma (肝细胞癌) patients using biomarkers</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introduction.html#cb12-1" aria-hidden="true" tabindex="-1"></a>hepatoCellular[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">65</span>,<span class="dv">71</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">16</span><span class="sc">:</span><span class="dv">20</span>,<span class="dv">24</span>,<span class="dv">47</span>)]</span></code></pre></div>
-<pre><code>##    Age Gender OS Death RFS Recurrence   CXCL17T CD4N     Ki67
-## 1   57      0 83     0  13          1 113.94724    0  6.04350
-## 2   58      1 81     0  81          0  54.07154   NA       NA
-## 3   65      1 79     0  79          0  22.18883   NA       NA
-## 65  38      1  5     1   5          1 106.78169    0 44.24411
-## 71  57      1 11     1  11          1  98.49680    0 99.59232</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="introduction.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># OS: overall survival</span></span>
-<span id="cb14-2"><a href="introduction.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># RFS: recurrence-free survival</span></span></code></pre></div>
+<p>Back to example 1.1</p>
+<p><img src="images/table3.1-figure3.1.png" /></p>
+<p>The median survival time is at t=6, which is the smallest time t such that S(t)&lt;=0.5.</p>
+<p>Based on “delta method”, the sampling variance of <span class="math inline">\(log(\hat{S}(t))\)</span>,</p>
+<p><span class="math display">\[var(log \hat{S}(t))=\sum_{t_i \le t}var(log(1-\hat{q}_i))\approx \sum_{t_i \le t}\frac{d_i}{n_i(n_i-d_i)}\]</span></p>
+<p>Use the delta method again,</p>
+<p><span class="math display">\[var(\hat{S}(t)) \approx [\hat{S}(t)]^2\sum_{t_i \le t}\frac{d_i}{n_i(n_i-d_i)}\]</span></p>
+<p>Another (more satisfying) approach is via the complementary log-log transformation of <span class="math inline">\(\hat{S}(t)\)</span></p>
+<p><span class="math display">\[var(log[-log \hat{S}(t)]) \approx \frac{1}{[log \hat{S}(t)]^2}\sum_{t_i \le t}\frac{d_i}{n_i(n_i-d_i)}\]</span></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="nonparametric-survival-curve-estimation.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb38-2"><a href="nonparametric-survival-curve-estimation.html#cb38-2" aria-hidden="true" tabindex="-1"></a>time <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">4</span>)</span>
+<span id="cb38-3"><a href="nonparametric-survival-curve-estimation.html#cb38-3" aria-hidden="true" tabindex="-1"></a>status<span class="ot">=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb38-4"><a href="nonparametric-survival-curve-estimation.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Surv</span>(time, status)</span></code></pre></div>
+<pre><code>## [1] 7+ 6  6+ 5+ 2  4</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="nonparametric-survival-curve-estimation.html#cb40-1" aria-hidden="true" tabindex="-1"></a>result.km <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status)<span class="sc">~</span><span class="dv">1</span>)</span>
+<span id="cb40-2"><a href="nonparametric-survival-curve-estimation.html#cb40-2" aria-hidden="true" tabindex="-1"></a>result.km</span></code></pre></div>
+<pre><code>## Call: survfit(formula = Surv(time, status) ~ 1)
+## 
+##      n events median 0.95LCL 0.95UCL
+## [1,] 6      3      6       4      NA</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="nonparametric-survival-curve-estimation.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(result.km)</span></code></pre></div>
+<pre><code>## Call: survfit(formula = Surv(time, status) ~ 1)
+## 
+##  time n.risk n.event survival std.err lower 95% CI upper 95% CI
+##     2      6       1    0.833   0.152        0.583            1
+##     4      5       1    0.667   0.192        0.379            1
+##     6      3       1    0.444   0.222        0.167            1</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="nonparametric-survival-curve-estimation.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="do">## the default value for conf.type option is &quot;log&quot;</span></span>
+<span id="cb44-2"><a href="nonparametric-survival-curve-estimation.html#cb44-2" aria-hidden="true" tabindex="-1"></a>result.km2 <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status)<span class="sc">~</span><span class="dv">1</span>, <span class="at">conf.type=</span><span class="st">&quot;log-log&quot;</span>)</span>
+<span id="cb44-3"><a href="nonparametric-survival-curve-estimation.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(result.km2)</span></code></pre></div>
+<pre><code>## Call: survfit(formula = Surv(time, status) ~ 1, conf.type = &quot;log-log&quot;)
+## 
+##  time n.risk n.event survival std.err lower 95% CI upper 95% CI
+##     2      6       1    0.833   0.152       0.2731        0.975
+##     4      5       1    0.667   0.192       0.1946        0.904
+##     6      3       1    0.444   0.222       0.0662        0.785</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="nonparametric-survival-curve-estimation.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb46-2"><a href="nonparametric-survival-curve-estimation.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(result.km, <span class="at">main=</span><span class="st">&quot;log&quot;</span>)</span>
+<span id="cb46-3"><a href="nonparametric-survival-curve-estimation.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(result.km2, <span class="at">main=</span><span class="st">&quot;log-log&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -286,8 +237,8 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="basic-principles-of-survival-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="basic-principles-of-survival-analysis.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

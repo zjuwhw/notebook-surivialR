@@ -1,0 +1,71 @@
+# Nonparametric Survival Curve Estimation
+
+## Nonparametric Estimation of the Survival Function
+
+product-limit estimator/Kaplan-Meier estimator (Kaplan and Meier, 1958): the product over the failure times of the conditional probabilities of surviving to the next failure time,
+
+$$\hat{S}(t)=\prod_{t_i \le t}(1-\hat{q}_i) = \prod_{t_i \le t}(1-\frac{d_i}{n_i})$$
+
+, where
+
+- $n_i$ is the number of subjects at risk at time $t_i$
+- $d_i$ is the number of individuals who fail at that time.
+
+Back to example 1.1
+
+![](./images/table3.1-figure3.1.png)
+
+The median survival time is at t=6, which is the smallest time t such that S(t)<=0.5.
+
+Based on "delta method", the sampling variance of $log(\hat{S}(t))$,
+
+$$var(log \hat{S}(t))=\sum_{t_i \le t}var(log(1-\hat{q}_i))\approx \sum_{t_i \le t}\frac{d_i}{n_i(n_i-d_i)}$$
+
+Use the delta method again,
+
+$$var(\hat{S}(t)) \approx [\hat{S}(t)]^2\sum_{t_i \le t}\frac{d_i}{n_i(n_i-d_i)}$$
+
+Another (more satisfying) approach is via the complementary log-log transformation of $\hat{S}(t)$
+
+$$var(log[-log \hat{S}(t)]) \approx \frac{1}{[log \hat{S}(t)]^2}\sum_{t_i \le t}\frac{d_i}{n_i(n_i-d_i)}$$
+
+```{r}
+library(survival)
+time = c(7,6,6,5,2,4)
+status=c(0,1,0,0,1,1)
+Surv(time, status)
+
+result.km = survfit(Surv(time, status)~1)
+result.km
+summary(result.km)
+
+
+## the default value for conf.type option is "log"
+result.km2 = survfit(Surv(time, status)~1, conf.type="log-log")
+summary(result.km2)
+
+layout(matrix(1:2,1,2))
+plot(result.km, main="log")
+plot(result.km2, main="log-log")
+```
+
+An alternative estimator of the survival function is Nelson-Aalen estimator/Fleming and Harrington, based on the relationship of the survival function to the hazard function
+
+$$S(t)=e^{-H(t)}\text{ and } H(t)=\sum_{t_i \le t}\frac{d_i}{n_i}$$
+
+```{r}
+result.fh = survfit(Surv(time, status)~1, conf.type="log-log", type="fh")
+summary(result.fh)
+```
+
+Back to example 1.2
+
+```{r}
+library(asaur)
+timeMonths = gastricXelox$timeWeeks * 7 /30.25
+delta = gastricXelox$delta
+result.km = survfit(Surv(timeMonths, delta)~1, conf.type="log-log")
+plot(result.km, conf.int=T, mark="|", xlab="Time in months", ylab="Survival probability",
+     main="Progression-free survival in gastric cancer patients")
+```
+

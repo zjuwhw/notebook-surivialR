@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="introduction.html"/>
-
+<link rel="next" href="nonparametric-survival-curve-estimation.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -153,6 +153,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#parametric-survival-distributions"><i class="fa fa-check"></i><b>2.4</b> Parametric Survival Distributions</a></li>
 <li class="chapter" data-level="2.5" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#computing-the-survival-function-from-the-hazard-function"><i class="fa fa-check"></i><b>2.5</b> Computing the Survival Function from the Hazard Function</a></li>
 <li class="chapter" data-level="2.6" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#a-breif-introduction-to-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>2.6</b> A breif introduction to maximum likelihood estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="nonparametric-survival-curve-estimation.html"><a href="nonparametric-survival-curve-estimation.html"><i class="fa fa-check"></i><b>3</b> Nonparametric Survival Curve Estimation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="nonparametric-survival-curve-estimation.html"><a href="nonparametric-survival-curve-estimation.html#nonparametric-estimation-of-the-survival-function"><i class="fa fa-check"></i><b>3.1</b> Nonparametric Estimation of the Survival Function</a></li>
 </ul></li>
 <li class="divider"></li>
 Published with <a href="https://github.com/rstudio/bookdown" target="blank">bookdown</a> by <a href="http://zjuwhw.github.io/" target="blank">zjuwhw</a>
@@ -374,7 +378,7 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
 ## n= 6</code></pre>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="basic-principles-of-survival-analysis.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">### lambda</span></span>
 <span id="cb34-2"><a href="basic-principles-of-survival-analysis.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="do">### the coefficients of survreg() is log(1/theta), where theta is called</span></span>
-<span id="cb34-3"><a href="basic-principles-of-survival-analysis.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="do">### scale parameter and is 1/alpha</span></span>
+<span id="cb34-3"><a href="basic-principles-of-survival-analysis.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="do">### scale parameter and is 1/lambda</span></span>
 <span id="cb34-4"><a href="basic-principles-of-survival-analysis.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span><span class="fu">exp</span>(fit<span class="sc">$</span>coefficients)</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##         0.1</code></pre>
@@ -390,8 +394,8 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
           </div>
         </div>
       </div>
-<a href="introduction.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="nonparametric-survival-curve-estimation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
