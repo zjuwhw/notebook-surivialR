@@ -152,6 +152,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#mean-and-median-survival-time"><i class="fa fa-check"></i><b>2.3</b> Mean and Median Survival Time</a></li>
 <li class="chapter" data-level="2.4" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#parametric-survival-distributions"><i class="fa fa-check"></i><b>2.4</b> Parametric Survival Distributions</a></li>
 <li class="chapter" data-level="2.5" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#computing-the-survival-function-from-the-hazard-function"><i class="fa fa-check"></i><b>2.5</b> Computing the Survival Function from the Hazard Function</a></li>
+<li class="chapter" data-level="2.6" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#a-breif-introduction-to-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>2.6</b> A breif introduction to maximum likelihood estimation</a></li>
 </ul></li>
 <li class="divider"></li>
 Published with <a href="https://github.com/rstudio/bookdown" target="blank">bookdown</a> by <a href="http://zjuwhw.github.io/" target="blank">zjuwhw</a>
@@ -327,6 +328,60 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
 <pre><code>## [1] 74.38014</code></pre>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="basic-principles-of-survival-analysis.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(survFemale<span class="sc">*</span>tm.diff)</span></code></pre></div>
 <pre><code>## [1] 79.44648</code></pre>
+</div>
+<div id="a-breif-introduction-to-maximum-likelihood-estimation" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> A breif introduction to maximum likelihood estimation<a href="basic-principles-of-survival-analysis.html#a-breif-introduction-to-maximum-likelihood-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose that we have a series of observations <span class="math inline">\(t_1, t_2, ..., t_n\)</span> from an exponential distribution with unknown parameter <span class="math inline">\(\lambda\)</span>. Maximum likelihood estimation can provides a mathematical framework to estimate <span class="math inline">\(\lambda\)</span></p>
+<p>The likelihood function is</p>
+<p><span class="math display">\[L(\lambda; t_1, t_2, ..., t_n)=f(t_1, \lambda)f(t_2, \lambda)...f(t_n,\lambda)=\prod^n_{i=1}f(t_i,\lambda)\]</span></p>
+<p>Considering right-censored observation, we put in the survival function, indicating that obersvation is known only to exceed a particular value.</p>
+<p><span class="math display">\[L(\lambda; t_1, t_2, ..., t_n)=\prod_{i=1}^n f(t_i, \lambda)^{\delta_i}S(t_i, \lambda)^{1-\delta_i}=\prod_{i=1}^n h(t_i, \lambda)^{\delta_i}S(t_i,\lambda)\]</span></p>
+<p>, where <span class="math inline">\(\delta_i\)</span> indicates the censoring status, that is <span class="math inline">\(\delta_i=1\)</span> for an observed data, and <span class="math inline">\(\delta_i=0\)</span> for a censored data</p>
+<p>For the exponential distribution,</p>
+<p><span class="math display">\[L(\lambda)=\prod_{i=1}^n[\lambda e^{-t_i\lambda}]^{\delta_i}[e^{-\lambda t_i}]^{1-\delta_i}=\prod_{i=1}^n[\lambda^{\delta_i}e^{-\lambda t_i}]\]</span></p>
+<p>Set the total number of deaths as <span class="math inline">\(d=\sum_{i=1}^n\delta_i\)</span>, and the total amount of time of patients on the study (called as person-years in epidemiology) as <span class="math inline">\(V=\sum_{i=1}^n t_i\)</span>, then the likelihood function</p>
+<p><span class="math display">\[L(\lambda)=\lambda^d e^{-\lambda V}\]</span></p>
+<p>The log-likelihood function</p>
+<p><span class="math display">\[l(\lambda) = d*log(\lambda) - \lambda V\]</span></p>
+<p>The first derivative (also called the score function),</p>
+<p><span class="math display">\[l&#39;(\lambda)=\frac{d}{\lambda}-V\]</span></p>
+<p>Set <span class="math inline">\(l&#39;(\lambda)=0\)</span>, we can get the maximum likelihood estimate (MLE),</p>
+<p><span class="math display">\[\hat{\lambda} = d/V\]</span></p>
+<p>The second derivative</p>
+<p><span class="math display">\[l&#39;&#39;(\lambda) = -\frac{d}{\lambda^2}=-I(\lambda)\]</span></p>
+<p>, where <span class="math inline">\(I(\lambda)\)</span> is known as information function, where its inverse is approximately the variance of the MLE</p>
+<p><span class="math display">\[var(\hat{\lambda})\approx I^{-1}(\lambda)=\lambda^2/d\]</span></p>
+<p>In practice, we can use <span class="math inline">\(\hat{\lambda}\)</span> to replace <span class="math inline">\(\lambda\)</span></p>
+<p><span class="math display">\[var(\hat{\lambda})\approx I^{-1}(\lambda)=\hat{\lambda}^2/d=d/V^2\]</span></p>
+<p>Back to the example 1.1, <span class="math inline">\(d=3\)</span>, and <span class="math inline">\(V=7+6+6+5+2+4=30\)</span>, so <span class="math inline">\(\hat{\lambda}=3/30=0.1\)</span> and the log-likelihood function is <span class="math inline">\(l(\lambda)=d log(\lambda)-\lambda V=3*log(0.1)-0.1*30=-9.9\)</span> when MLE</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="basic-principles-of-survival-analysis.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb32-2"><a href="basic-principles-of-survival-analysis.html#cb32-2" aria-hidden="true" tabindex="-1"></a>time <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">4</span>)</span>
+<span id="cb32-3"><a href="basic-principles-of-survival-analysis.html#cb32-3" aria-hidden="true" tabindex="-1"></a>status <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb32-4"><a href="basic-principles-of-survival-analysis.html#cb32-4" aria-hidden="true" tabindex="-1"></a>surv_obj <span class="ot">&lt;-</span> <span class="fu">Surv</span>(time, status)</span>
+<span id="cb32-5"><a href="basic-principles-of-survival-analysis.html#cb32-5" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">survreg</span>(surv_obj <span class="sc">~</span> <span class="dv">1</span>, <span class="at">dist =</span> <span class="st">&quot;exponential&quot;</span>)</span>
+<span id="cb32-6"><a href="basic-principles-of-survival-analysis.html#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## survreg(formula = surv_obj ~ 1, dist = &quot;exponential&quot;)
+##             Value Std. Error    z       p
+## (Intercept) 2.303      0.577 3.99 6.7e-05
+## 
+## Scale fixed at 1 
+## 
+## Exponential distribution
+## Loglik(model)= -9.9   Loglik(intercept only)= -9.9
+## Number of Newton-Raphson Iterations: 4 
+## n= 6</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="basic-principles-of-survival-analysis.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">### lambda</span></span>
+<span id="cb34-2"><a href="basic-principles-of-survival-analysis.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="do">### the coefficients of survreg() is log(1/theta), where theta is called</span></span>
+<span id="cb34-3"><a href="basic-principles-of-survival-analysis.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="do">### scale parameter and is 1/alpha</span></span>
+<span id="cb34-4"><a href="basic-principles-of-survival-analysis.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span><span class="fu">exp</span>(fit<span class="sc">$</span>coefficients)</span></code></pre></div>
+<pre><code>## (Intercept) 
+##         0.1</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="basic-principles-of-survival-analysis.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">### theory</span></span>
+<span id="cb36-2"><a href="basic-principles-of-survival-analysis.html#cb36-2" aria-hidden="true" tabindex="-1"></a>d<span class="ot">=</span><span class="fu">sum</span>(status); V<span class="ot">=</span><span class="fu">sum</span>(time)</span>
+<span id="cb36-3"><a href="basic-principles-of-survival-analysis.html#cb36-3" aria-hidden="true" tabindex="-1"></a>d<span class="sc">/</span>V <span class="do">### lambda</span></span></code></pre></div>
+<pre><code>## [1] 0.1</code></pre>
 
 </div>
 </div>

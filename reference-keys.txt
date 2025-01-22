@@ -9,3 +9,4 @@ other-representations-of-a-survival-distribution
 mean-and-median-survival-time
 parametric-survival-distributions
 computing-the-survival-function-from-the-hazard-function
+a-breif-introduction-to-maximum-likelihood-estimation

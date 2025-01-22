@@ -211,3 +211,67 @@ sum(survFemale*tm.diff)
 ```
 
 ## A breif introduction to maximum likelihood estimation
+
+Suppose that we have a series of observations $t_1, t_2, ..., t_n$ from an exponential distribution with unknown parameter $\lambda$. Maximum likelihood estimation can provides a mathematical framework to estimate $\lambda$
+
+The likelihood function is
+
+$$L(\lambda; t_1, t_2, ..., t_n)=f(t_1, \lambda)f(t_2, \lambda)...f(t_n,\lambda)=\prod^n_{i=1}f(t_i,\lambda)$$
+
+Considering right-censored observation, we put in the survival function, indicating that obersvation is known only to exceed a particular value.
+
+$$L(\lambda; t_1, t_2, ..., t_n)=\prod_{i=1}^n f(t_i, \lambda)^{\delta_i}S(t_i, \lambda)^{1-\delta_i}=\prod_{i=1}^n h(t_i, \lambda)^{\delta_i}S(t_i,\lambda)$$
+
+, where $\delta_i$ indicates the censoring status, that is $\delta_i=1$ for an observed data, and $\delta_i=0$ for a censored data
+
+For the exponential distribution,
+
+$$L(\lambda)=\prod_{i=1}^n[\lambda e^{-t_i\lambda}]^{\delta_i}[e^{-\lambda t_i}]^{1-\delta_i}=\prod_{i=1}^n[\lambda^{\delta_i}e^{-\lambda t_i}]$$
+
+Set the total number of deaths as $d=\sum_{i=1}^n\delta_i$, and the total amount of time of patients on the study (called as person-years in epidemiology) as $V=\sum_{i=1}^n t_i$, then the likelihood function
+
+$$L(\lambda)=\lambda^d e^{-\lambda V}$$
+
+The log-likelihood function
+
+$$l(\lambda) = d*log(\lambda) - \lambda V$$
+
+The first derivative (also called the score function),
+
+$$l'(\lambda)=\frac{d}{\lambda}-V$$
+
+Set $l'(\lambda)=0$, we can get the maximum likelihood estimate (MLE),
+
+$$\hat{\lambda} = d/V$$
+
+The second derivative
+
+$$l''(\lambda) = -\frac{d}{\lambda^2}=-I(\lambda)$$
+
+, where $I(\lambda)$ is known as information function, where its inverse is approximately the variance of the MLE
+
+$$var(\hat{\lambda})\approx I^{-1}(\lambda)=\lambda^2/d$$
+
+In practice, we can use $\hat{\lambda}$ to replace $\lambda$
+
+$$var(\hat{\lambda})\approx I^{-1}(\lambda)=\hat{\lambda}^2/d=d/V^2$$
+
+Back to the example 1.1, $d=3$, and $V=7+6+6+5+2+4=30$, so $\hat{\lambda}=3/30=0.1$ and the log-likelihood function is $l(\lambda)=d log(\lambda)-\lambda V=3*log(0.1)-0.1*30=-9.9$ when MLE
+
+```{r}
+library(survival)
+time = c(7,6,6,5,2,4)
+status = c(0,1,0,0,1,1)
+surv_obj <- Surv(time, status)
+fit <- survreg(surv_obj ~ 1, dist = "exponential")
+summary(fit)
+
+### lambda
+### the coefficients of survreg() is log(1/theta), where theta is called
+### scale parameter and is 1/lambda
+1/exp(fit$coefficients)
+
+### theory
+d=sum(status); V=sum(time)
+d/V ### lambda
+```
