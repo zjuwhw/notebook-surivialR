@@ -69,3 +69,37 @@ plot(result.km, conf.int=T, mark="|", xlab="Time in months", ylab="Survival prob
      main="Progression-free survival in gastric cancer patients")
 ```
 
+## Finding the median survival and a confidence interval for the median
+ 
+Formally, the median survival time is defined as $\hat{t}_{med}=inf\{t: \hat{S}(t) \le 0.5\}$. That is the smallest t such that the survival function is less than or equal to 0.5.
+ 
+To find a $1-\alpha$ confidence interval for the median, we consider the following inequality:
+ 
+$$-z_{\alpha/2}\le \frac{g(\hat{S}(t))-g(0.5)}{\sqrt{var[g(\hat{S}(t))]}} \le z_{\alpha/2}$$
+ 
+, where $g(u)=log[-log(u)]$ and $var[g(\hat{S}(t))]$ has been given above
+ 
+```{r}
+result.km
+plot(result.km)
+abline(h=0.5, col="red", lty=2)
+segments(x0 = 10.3, y0 = -1, x1 = 10.3, y1 = 0.5, col = "green", lty = 2)
+segments(x0 = 5.79, y0 = -1, x1 = 5.79, y1 = 0.5, col = "blue", lty = 2)
+segments(x0 = 15.3, y0 = -1, x1 = 15.3, y1 = 0.5, col = "blue", lty = 2)
+```
+
+## Median Follow-up Time
+
+A simple definition is to consider all of the survival times
+
+A perhaps better way is to first switch the censoring and death indicators, and then computes the KM estimate. This method is also known as the "reverse" Kaplan-Meier.
+
+```{r}
+delta.followup = 1-delta
+survfit(Surv(timeMonths, delta.followup)~1)
+```
+
+## Obtaining a smoothed Hazard and Survival Function estimate
+
+## Left Truncation
+

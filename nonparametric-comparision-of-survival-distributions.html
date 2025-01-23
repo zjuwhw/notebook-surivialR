@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Nonparametric Comparision of Survival Distributions | _main.knit</title>
+  <meta name="description" content="" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Nonparametric Comparision of Survival Distributions | _main.knit" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Nonparametric Comparision of Survival Distributions | _main.knit" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="nonparametric-survival-curve-estimation.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Notebook for Applied Survival Analysis using R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#what-is-survival-analysis"><i class="fa fa-check"></i><b>1.1</b> What is Survival Analysis</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#what-you-need-to-know-to-use-this-book"><i class="fa fa-check"></i><b>1.2</b> What you need to know to use this book</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#survival-data-and-censoring"><i class="fa fa-check"></i><b>1.3</b> Survival Data and Censoring</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#some-examples-of-survival-data-sets"><i class="fa fa-check"></i><b>1.4</b> Some examples of survival data sets</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html"><i class="fa fa-check"></i><b>2</b> Basic Principles of Survival Analysis</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#hazard-and-survival-functions"><i class="fa fa-check"></i><b>2.1</b> Hazard and Survival Functions</a></li>
+<li class="chapter" data-level="2.2" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#other-representations-of-a-survival-distribution"><i class="fa fa-check"></i><b>2.2</b> Other Representations of a Survival Distribution</a></li>
+<li class="chapter" data-level="2.3" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#mean-and-median-survival-time"><i class="fa fa-check"></i><b>2.3</b> Mean and Median Survival Time</a></li>
+<li class="chapter" data-level="2.4" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#parametric-survival-distributions"><i class="fa fa-check"></i><b>2.4</b> Parametric Survival Distributions</a></li>
+<li class="chapter" data-level="2.5" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#computing-the-survival-function-from-the-hazard-function"><i class="fa fa-check"></i><b>2.5</b> Computing the Survival Function from the Hazard Function</a></li>
+<li class="chapter" data-level="2.6" data-path="basic-principles-of-survival-analysis.html"><a href="basic-principles-of-survival-analysis.html#a-breif-introduction-to-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>2.6</b> A breif introduction to maximum likelihood estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="nonparametric-survival-curve-estimation.html"><a href="nonparametric-survival-curve-estimation.html"><i class="fa fa-check"></i><b>3</b> Nonparametric Survival Curve Estimation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="nonparametric-survival-curve-estimation.html"><a href="nonparametric-survival-curve-estimation.html#nonparametric-estimation-of-the-survival-function"><i class="fa fa-check"></i><b>3.1</b> Nonparametric Estimation of the Survival Function</a></li>
+<li class="chapter" data-level="3.2" data-path="nonparametric-survival-curve-estimation.html"><a href="nonparametric-survival-curve-estimation.html#finding-the-median-survival-and-a-confidence-interval-for-the-median"><i class="fa fa-check"></i><b>3.2</b> Finding the median survival and a confidence interval for the median</a></li>
+<li class="chapter" data-level="3.3" data-path="nonparametric-survival-curve-estimation.html"><a href="nonparametric-survival-curve-estimation.html#median-follow-up-time"><i class="fa fa-check"></i><b>3.3</b> Median Follow-up Time</a></li>
+<li class="chapter" data-level="3.4" data-path="nonparametric-survival-curve-estimation.html"><a href="nonparametric-survival-curve-estimation.html#obtaining-a-smoothed-hazard-and-survival-function-estimate"><i class="fa fa-check"></i><b>3.4</b> Obtaining a smoothed Hazard and Survival Function estimate</a></li>
+<li class="chapter" data-level="3.5" data-path="nonparametric-survival-curve-estimation.html"><a href="nonparametric-survival-curve-estimation.html#left-truncation"><i class="fa fa-check"></i><b>3.5</b> Left Truncation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="nonparametric-comparision-of-survival-distributions.html"><a href="nonparametric-comparision-of-survival-distributions.html"><i class="fa fa-check"></i><b>4</b> Nonparametric Comparision of Survival Distributions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="nonparametric-comparision-of-survival-distributions.html"><a href="nonparametric-comparision-of-survival-distributions.html#comparing-two-groups-of-survival-times"><i class="fa fa-check"></i><b>4.1</b> Comparing Two Groups of Survival Times</a></li>
+<li class="chapter" data-level="4.2" data-path="nonparametric-comparision-of-survival-distributions.html"><a href="nonparametric-comparision-of-survival-distributions.html#stratified-tests"><i class="fa fa-check"></i><b>4.2</b> Stratified Tests</a></li>
+</ul></li>
+<li class="divider"></li>
+Published with <a href="https://github.com/rstudio/bookdown" target="blank">bookdown</a> by <a href="http://zjuwhw.github.io/" target="blank">zjuwhw</a>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="nonparametric-comparision-of-survival-distributions" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Nonparametric Comparision of Survival Distributions<a href="nonparametric-comparision-of-survival-distributions.html#nonparametric-comparision-of-survival-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="comparing-two-groups-of-survival-times" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Comparing Two Groups of Survival Times<a href="nonparametric-comparision-of-survival-distributions.html#comparing-two-groups-of-survival-times" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>two-side test vs one-sided test</li>
+<li>two-sample Students t-test</li>
+<li>rank-based Mann-Whitney test</li>
+</ul>
+<p>For survival analysis, nonparametric tests for</p>
+<ul>
+<li><span class="math inline">\(H_0:S_1(t)=S_0(t)\)</span></li>
+<li>one-side: <span class="math inline">\(H_A:S_1(t)&gt;S_0(t)\)</span></li>
+<li>two-side: <span class="math inline">\(H_A: S_1(t) \neq S_0(t)\)</span></li>
+</ul>
+<p>The relationship between <span class="math inline">\(S_1(t)\)</span> and <span class="math inline">\(S_0(t)\)</span> can be different with differnt <span class="math inline">\(t\)</span></p>
+<p>Lehman alternation: <span class="math inline">\(H_A: S_1(t)=[S_0(t)]^\psi\)</span>, which is equivalent to <span class="math inline">\(h_1(t)=\psi h_0(t)\)</span>. Then the one sided test would be <span class="math inline">\(H_0:\psi=1\)</span> vs <span class="math inline">\(H_1: \psi&lt;1\)</span>.</p>
+<p>Construct a two-by-two table for each failure time <span class="math inline">\(t_i\)</span>, with <span class="math inline">\(n_{0i}\)</span> and <span class="math inline">\(n_{1i}\)</span> being the numbers at risk in group 1 and 2, and <span class="math inline">\(d_{0i}\)</span> and <span class="math inline">\(d_{1i}\)</span> being the number of failures in group 1 and 2. Based on hypergeometric distribution, we can have</p>
+<p><span class="math display">\[p(d_{0i}|n_{0i},n_{1i},d_i)=\frac{\binom{n_{0i}}{d_{0i}}\binom{n_{1i}}{d_{1i}}}{\binom{n_i}{d_i}}\]</span>
+, where <span class="math display">\[\binom{n}{d}=\frac{n!}{d!(n-d)!}\]</span></p>
+<p>The expected mean <span class="math inline">\(e_{0i}\)</span> and variance <span class="math inline">\(v_{0i}\)</span> can be given by</p>
+<p><span class="math display">\[e_{0i}=E(d_{0i})=\frac{n_{0i}d_i}{n_i}\]</span></p>
+<p><span class="math display">\[v_{0i}=var(d_{0i})=\frac{n_{0i}n_{1i}d_i(n_i-d_i)}{n_i^2(n_i-1)}\]</span></p>
+<p>We can sum the differences between the expected and observed values to get the test statistics <span class="math inline">\(U_0\)</span> and its variance V_0</p>
+<p><span class="math display">\[U_0=\sum_{i=1}^D(d_{0i}-e_{0i})=\sum d_{0i} - \sum e_{0i}\]</span></p>
+<p><span class="math display">\[V_0=var(U_0)=\sum v_{0i}\]</span></p>
+<p>Then the test statistic is</p>
+<p><span class="math display">\[\frac{U_0}{\sqrt{V_0}} \sim N(0,1)\]</span>
+, or</p>
+<p><span class="math display">\[\frac{U_0^2}{V_0} \sim \chi^2_1\]</span></p>
+<p>This test is known as the log-rank test.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="nonparametric-comparision-of-survival-distributions.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb55-2"><a href="nonparametric-comparision-of-survival-distributions.html#cb55-2" aria-hidden="true" tabindex="-1"></a>tt <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">19</span>, <span class="dv">25</span>)</span>
+<span id="cb55-3"><a href="nonparametric-comparision-of-survival-distributions.html#cb55-3" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb55-4"><a href="nonparametric-comparision-of-survival-distributions.html#cb55-4" aria-hidden="true" tabindex="-1"></a>trt <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>)  <span class="do">## group 0 or 1</span></span>
+<span id="cb55-5"><a href="nonparametric-comparision-of-survival-distributions.html#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(tt, delta)<span class="sc">~</span>trt)</span></code></pre></div>
+<pre><code>## Call:
+## survdiff(formula = Surv(tt, delta) ~ trt)
+## 
+##       N Observed Expected (O-E)^2/E (O-E)^2/V
+## trt=0 3        2     1.08     0.776      1.27
+## trt=1 3        2     2.92     0.288      1.27
+## 
+##  Chisq= 1.3  on 1 degrees of freedom, p= 0.3</code></pre>
+<p>A full table is</p>
+<p><img src="images/Figure4.1.png" /></p>
+<p>The log-rank statistic is identical to Cochran-Mantel-Haenzel test in epidemiology, and may also be derived from the proportional hazards model.</p>
+<p>A generalization is to define a weighted log-rank test using weights <span class="math inline">\(w_i\)</span> for D time points,</p>
+<p><span class="math display">\[U_0(w)=\sum w_i(d_{0i}-e_{0i})\]</span></p>
+<p><span class="math display">\[var(U_0)=\sum w_i^2v_{0i}=V_0(w)\]</span></p>
+<p>The most common way of setting weights is to sue the product-limit estimator from the combined sample</p>
+<p><span class="math display">\[w_i=\{\hat{S}(t_i)\}^\rho\]</span></p>
+<p>A log-rank test using these weights is called the Fleming-Harrington <span class="math inline">\(G(\rho)\)</span> test. If <span class="math inline">\(\rho=0\)</span>, this test is equivalent to the log-rank test. If <span class="math inline">\(\rho=1\)</span>, the test is called Prentice modification/Peto-Peto modification of the Gehan-Wilcoxon test, which place higher weight on the earlier survival differences.</p>
+<p>Back to Example 1.3</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(asaur)</span>
+<span id="cb57-2"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(pancreatic)</span>
+<span id="cb57-3"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-3" aria-hidden="true" tabindex="-1"></a>Progression.d <span class="ot">=</span> <span class="fu">as.Date</span>(<span class="fu">as.character</span>(progression), <span class="st">&quot;%m/%d/%Y&quot;</span>)</span>
+<span id="cb57-4"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-4" aria-hidden="true" tabindex="-1"></a>OnStudy.d <span class="ot">=</span> <span class="fu">as.Date</span>(<span class="fu">as.character</span>(onstudy), <span class="st">&quot;%m/%d/%Y&quot;</span>)</span>
+<span id="cb57-5"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-5" aria-hidden="true" tabindex="-1"></a>Death.d <span class="ot">=</span> <span class="fu">as.Date</span>(<span class="fu">as.character</span>(death), <span class="st">&quot;%m/%d/%Y&quot;</span>)</span>
+<span id="cb57-6"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-7"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-7" aria-hidden="true" tabindex="-1"></a>progressionOnly <span class="ot">=</span> Progression.d <span class="sc">-</span> OnStudy.d</span>
+<span id="cb57-8"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-8" aria-hidden="true" tabindex="-1"></a>overallSurvival <span class="ot">=</span> Death.d <span class="sc">-</span> OnStudy.d</span>
+<span id="cb57-9"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-9" aria-hidden="true" tabindex="-1"></a>pfs <span class="ot">=</span> progressionOnly</span>
+<span id="cb57-10"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-10" aria-hidden="true" tabindex="-1"></a>pfs[<span class="fu">is.na</span>(pfs)] <span class="ot">=</span> overallSurvival[<span class="fu">is.na</span>(pfs)] <span class="do">### PFS: progression or death, whichever comes first</span></span>
+<span id="cb57-11"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-12"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-12" aria-hidden="true" tabindex="-1"></a>pfs.month <span class="ot">=</span> pfs<span class="sc">/</span><span class="fl">30.5</span></span>
+<span id="cb57-13"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">survfit</span>(<span class="fu">Surv</span>(pfs.month) <span class="sc">~</span> stage), <span class="at">xlab=</span><span class="st">&quot;Time in months&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Survival probability&quot;</span>,</span>
+<span id="cb57-14"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb57-15"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-15" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;Locally advanced&quot;</span>, <span class="st">&quot;Metastatic&quot;</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>) , <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="nonparametric-comparision-of-survival-distributions.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(pfs) <span class="sc">~</span> stage, <span class="at">rho=</span><span class="dv">0</span>) <span class="do">### log-rank test</span></span></code></pre></div>
+<pre><code>## Call:
+## survdiff(formula = Surv(pfs) ~ stage, rho = 0)
+## 
+##           N Observed Expected (O-E)^2/E (O-E)^2/V
+## stage=LA  8        8     12.3      1.49      2.25
+## stage=M  33       33     28.7      0.64      2.25
+## 
+##  Chisq= 2.2  on 1 degrees of freedom, p= 0.1</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="nonparametric-comparision-of-survival-distributions.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(pfs) <span class="sc">~</span> stage, <span class="at">rho=</span><span class="dv">1</span>) <span class="do">### Prentice modification</span></span></code></pre></div>
+<pre><code>## Call:
+## survdiff(formula = Surv(pfs) ~ stage, rho = 1)
+## 
+##           N Observed Expected (O-E)^2/E (O-E)^2/V
+## stage=LA  8     2.34     5.88     2.128      4.71
+## stage=M  33    18.76    15.22     0.822      4.71
+## 
+##  Chisq= 4.7  on 1 degrees of freedom, p= 0.03</code></pre>
+</div>
+<div id="stratified-tests" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Stratified Tests<a href="nonparametric-comparision-of-survival-distributions.html#stratified-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If we need to compare two groups while adjusting for another covariate, we can</p>
+<ul>
+<li>include the other covarite (or multiple covarites) as regression terms for the hazard function (following chapters)</li>
+<li>use stratified log-rank test, if the covariate we are adjusting for is categorical with a small number of levels <span class="math inline">\(G\)</span></li>
+</ul>
+<p>The p value is 0.00299 for Prentice modification test, but 0.134 for log-rank test. From Figure, we can see the metastatic group shows an early survival advantage over the locally advanced group, but the survival curves converge after about 10 months.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="nonparametric-survival-curve-estimation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
