@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Nonparametric Comparision of Survival Distributions | _main.knit</title>
+  <title>5 Regression Analysis Using the Proportional Hazards Model | _main.knit</title>
   <meta name="description" content="" />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Nonparametric Comparision of Survival Distributions | _main.knit" />
+  <meta property="og:title" content="5 Regression Analysis Using the Proportional Hazards Model | _main.knit" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Nonparametric Comparision of Survival Distributions | _main.knit" />
+  <meta name="twitter:title" content="5 Regression Analysis Using the Proportional Hazards Model | _main.knit" />
   
   
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="nonparametric-survival-curve-estimation.html"/>
-<link rel="next" href="regression-analysis-using-the-proportional-hazards-model.html"/>
+<link rel="prev" href="nonparametric-comparision-of-survival-distributions.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -192,103 +192,81 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="nonparametric-comparision-of-survival-distributions" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">4</span> Nonparametric Comparision of Survival Distributions<a href="nonparametric-comparision-of-survival-distributions.html#nonparametric-comparision-of-survival-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="comparing-two-groups-of-survival-times" class="section level2 hasAnchor" number="4.1">
-<h2><span class="header-section-number">4.1</span> Comparing Two Groups of Survival Times<a href="nonparametric-comparision-of-survival-distributions.html#comparing-two-groups-of-survival-times" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ul>
-<li>two-side test vs one-sided test</li>
-<li>two-sample Students t-test</li>
-<li>rank-based Mann-Whitney test</li>
-</ul>
-<p>For survival analysis, nonparametric tests for</p>
-<ul>
-<li><span class="math inline">\(H_0:S_1(t)=S_0(t)\)</span></li>
-<li>one-side: <span class="math inline">\(H_A:S_1(t)&gt;S_0(t)\)</span></li>
-<li>two-side: <span class="math inline">\(H_A: S_1(t) \neq S_0(t)\)</span></li>
-</ul>
-<p>The relationship between <span class="math inline">\(S_1(t)\)</span> and <span class="math inline">\(S_0(t)\)</span> can be different with differnt <span class="math inline">\(t\)</span></p>
-<p>Lehman alternation: <span class="math inline">\(H_A: S_1(t)=[S_0(t)]^\psi\)</span>, which is equivalent to <span class="math inline">\(h_1(t)=\psi h_0(t)\)</span>. Then the one sided test would be <span class="math inline">\(H_0:\psi=1\)</span> vs <span class="math inline">\(H_1: \psi&lt;1\)</span>.</p>
-<p>Construct a two-by-two table for each failure time <span class="math inline">\(t_i\)</span>, with <span class="math inline">\(n_{0i}\)</span> and <span class="math inline">\(n_{1i}\)</span> being the numbers at risk in group 1 and 2, and <span class="math inline">\(d_{0i}\)</span> and <span class="math inline">\(d_{1i}\)</span> being the number of failures in group 1 and 2. Based on hypergeometric distribution, we can have</p>
-<p><span class="math display">\[p(d_{0i}|n_{0i},n_{1i},d_i)=\frac{\binom{n_{0i}}{d_{0i}}\binom{n_{1i}}{d_{1i}}}{\binom{n_i}{d_i}}\]</span>
-, where <span class="math display">\[\binom{n}{d}=\frac{n!}{d!(n-d)!}\]</span></p>
-<p>The expected mean <span class="math inline">\(e_{0i}\)</span> and variance <span class="math inline">\(v_{0i}\)</span> can be given by</p>
-<p><span class="math display">\[e_{0i}=E(d_{0i})=\frac{n_{0i}d_i}{n_i}\]</span></p>
-<p><span class="math display">\[v_{0i}=var(d_{0i})=\frac{n_{0i}n_{1i}d_i(n_i-d_i)}{n_i^2(n_i-1)}\]</span></p>
-<p>We can sum the differences between the expected and observed values to get the test statistics <span class="math inline">\(U_0\)</span> and its variance V_0</p>
-<p><span class="math display">\[U_0=\sum_{i=1}^D(d_{0i}-e_{0i})=\sum d_{0i} - \sum e_{0i}\]</span></p>
-<p><span class="math display">\[V_0=var(U_0)=\sum v_{0i}\]</span></p>
-<p>Then the test statistic is</p>
-<p><span class="math display">\[\frac{U_0}{\sqrt{V_0}} \sim N(0,1)\]</span>
-, or</p>
-<p><span class="math display">\[\frac{U_0^2}{V_0} \sim \chi^2_1\]</span></p>
-<p>This test is known as the log-rank test.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="nonparametric-comparision-of-survival-distributions.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb55-2"><a href="nonparametric-comparision-of-survival-distributions.html#cb55-2" aria-hidden="true" tabindex="-1"></a>tt <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">19</span>, <span class="dv">25</span>)</span>
-<span id="cb55-3"><a href="nonparametric-comparision-of-survival-distributions.html#cb55-3" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb55-4"><a href="nonparametric-comparision-of-survival-distributions.html#cb55-4" aria-hidden="true" tabindex="-1"></a>trt <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>)  <span class="do">## group 0 or 1</span></span>
-<span id="cb55-5"><a href="nonparametric-comparision-of-survival-distributions.html#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(tt, delta)<span class="sc">~</span>trt)</span></code></pre></div>
-<pre><code>## Call:
-## survdiff(formula = Surv(tt, delta) ~ trt)
-## 
-##       N Observed Expected (O-E)^2/E (O-E)^2/V
-## trt=0 3        2     1.08     0.776      1.27
-## trt=1 3        2     2.92     0.288      1.27
-## 
-##  Chisq= 1.3  on 1 degrees of freedom, p= 0.3</code></pre>
-<p>A full table is</p>
-<p><img src="images/Figure4.1.png" /></p>
-<p>The log-rank statistic is identical to Cochran-Mantel-Haenzel test in epidemiology, and may also be derived from the proportional hazards model.</p>
-<p>A generalization is to define a weighted log-rank test using weights <span class="math inline">\(w_i\)</span> for D time points,</p>
-<p><span class="math display">\[U_0(w)=\sum w_i(d_{0i}-e_{0i})\]</span></p>
-<p><span class="math display">\[var(U_0)=\sum w_i^2v_{0i}=V_0(w)\]</span></p>
-<p>The most common way of setting weights is to sue the product-limit estimator from the combined sample</p>
-<p><span class="math display">\[w_i=\{\hat{S}(t_i)\}^\rho\]</span></p>
-<p>A log-rank test using these weights is called the Fleming-Harrington <span class="math inline">\(G(\rho)\)</span> test. If <span class="math inline">\(\rho=0\)</span>, this test is equivalent to the log-rank test. If <span class="math inline">\(\rho=1\)</span>, the test is called Prentice modification/Peto-Peto modification of the Gehan-Wilcoxon test, which place higher weight on the earlier survival differences.</p>
-<p>Back to Example 1.3</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(asaur)</span>
-<span id="cb57-2"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(pancreatic)</span>
-<span id="cb57-3"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-3" aria-hidden="true" tabindex="-1"></a>Progression.d <span class="ot">=</span> <span class="fu">as.Date</span>(<span class="fu">as.character</span>(progression), <span class="st">&quot;%m/%d/%Y&quot;</span>)</span>
-<span id="cb57-4"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-4" aria-hidden="true" tabindex="-1"></a>OnStudy.d <span class="ot">=</span> <span class="fu">as.Date</span>(<span class="fu">as.character</span>(onstudy), <span class="st">&quot;%m/%d/%Y&quot;</span>)</span>
-<span id="cb57-5"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-5" aria-hidden="true" tabindex="-1"></a>Death.d <span class="ot">=</span> <span class="fu">as.Date</span>(<span class="fu">as.character</span>(death), <span class="st">&quot;%m/%d/%Y&quot;</span>)</span>
-<span id="cb57-6"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-7"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-7" aria-hidden="true" tabindex="-1"></a>progressionOnly <span class="ot">=</span> Progression.d <span class="sc">-</span> OnStudy.d</span>
-<span id="cb57-8"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-8" aria-hidden="true" tabindex="-1"></a>overallSurvival <span class="ot">=</span> Death.d <span class="sc">-</span> OnStudy.d</span>
-<span id="cb57-9"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-9" aria-hidden="true" tabindex="-1"></a>pfs <span class="ot">=</span> progressionOnly</span>
-<span id="cb57-10"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-10" aria-hidden="true" tabindex="-1"></a>pfs[<span class="fu">is.na</span>(pfs)] <span class="ot">=</span> overallSurvival[<span class="fu">is.na</span>(pfs)] <span class="do">### PFS: progression or death, whichever comes first</span></span>
-<span id="cb57-11"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-12"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-12" aria-hidden="true" tabindex="-1"></a>pfs.month <span class="ot">=</span> pfs<span class="sc">/</span><span class="fl">30.5</span></span>
-<span id="cb57-13"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">survfit</span>(<span class="fu">Surv</span>(pfs.month) <span class="sc">~</span> stage), <span class="at">xlab=</span><span class="st">&quot;Time in months&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Survival probability&quot;</span>,</span>
-<span id="cb57-14"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb57-15"><a href="nonparametric-comparision-of-survival-distributions.html#cb57-15" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;Locally advanced&quot;</span>, <span class="st">&quot;Metastatic&quot;</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>) , <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="nonparametric-comparision-of-survival-distributions.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(pfs) <span class="sc">~</span> stage, <span class="at">rho=</span><span class="dv">0</span>) <span class="do">### log-rank test</span></span></code></pre></div>
-<pre><code>## Call:
-## survdiff(formula = Surv(pfs) ~ stage, rho = 0)
-## 
-##           N Observed Expected (O-E)^2/E (O-E)^2/V
-## stage=LA  8        8     12.3      1.49      2.25
-## stage=M  33       33     28.7      0.64      2.25
-## 
-##  Chisq= 2.2  on 1 degrees of freedom, p= 0.1</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="nonparametric-comparision-of-survival-distributions.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(pfs) <span class="sc">~</span> stage, <span class="at">rho=</span><span class="dv">1</span>) <span class="do">### Prentice modification</span></span></code></pre></div>
-<pre><code>## Call:
-## survdiff(formula = Surv(pfs) ~ stage, rho = 1)
-## 
-##           N Observed Expected (O-E)^2/E (O-E)^2/V
-## stage=LA  8     2.34     5.88     2.128      4.71
-## stage=M  33    18.76    15.22     0.822      4.71
-## 
-##  Chisq= 4.7  on 1 degrees of freedom, p= 0.03</code></pre>
+<div id="regression-analysis-using-the-proportional-hazards-model" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">5</span> Regression Analysis Using the Proportional Hazards Model<a href="regression-analysis-using-the-proportional-hazards-model.html#regression-analysis-using-the-proportional-hazards-model" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="covariates-and-nonparametric-survival-models" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Covariates and nonparametric Survival Models<a href="regression-analysis-using-the-proportional-hazards-model.html#covariates-and-nonparametric-survival-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As mentioned in last chapter, Lehmann alternative <span class="math inline">\(S_1(t)=[S_0(t)]^{\psi}\)</span> can be re-expressed in terms of the hazard functions, yielding the <em>proportional hazards assumption</em>,</p>
+<p><span class="math display">\[h_1(t)=\psi h_0(t)\]</span></p>
+<p>Extend the model to include covariate information in a vector <span class="math inline">\(z\)</span> as follows:</p>
+<p><span class="math display">\[\psi = e^{z\beta}\]</span></p>
+<p>We can model this by <em>partial likelihood</em>, which was initially developed by D.R. Cox (1972), so it is often referred to as the <em>Cox proportional hazards model</em></p>
 </div>
-<div id="stratified-tests" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> Stratified Tests<a href="nonparametric-comparision-of-survival-distributions.html#stratified-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>If we need to compare two groups while adjusting for another covariate, we can</p>
+<div id="comparing-two-survival-distributions-using-a-partial-likelihood-function" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Comparing Two Survival Distributions Using a Partial Likelihood Function<a href="regression-analysis-using-the-proportional-hazards-model.html#comparing-two-survival-distributions-using-a-partial-likelihood-function" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Partial likelihood does not require the assumptions about the survival distributions (parametric survial distributions), which is required by the standard likelihood method in section 2.6.</p>
+<p>Under the proportional hazards model, assuming one single binary covarite <span class="math inline">\(z\)</span>, the hazard function for the i-th subject at the j-th failure time is</p>
+<p><span class="math display">\[h_i(t_j)=h_0(t_j)\psi_i\text{, and }\psi_i=e^{z_i\beta}\]</span></p>
+<p>, where</p>
 <ul>
-<li>include the other covarite (or multiple covarites) as regression terms for the hazard function (following chapters)</li>
-<li>use stratified log-rank test, if the covariate we are adjusting for is categorical with a small number of levels <span class="math inline">\(G\)</span></li>
+<li>i is the index of subject, <span class="math inline">\(i=1,...,n\)</span>, with n being the sample size</li>
+<li>j is the index of failure time, <span class="math inline">\(j=1,...,D\)</span>, with D being the number of failure times</li>
+<li><span class="math inline">\(z_i\)</span> is the covariate (the simple case: <span class="math inline">\(z_i=1\)</span> when i-th subject in experimental group, or <span class="math inline">\(z_i=0\)</span> when i-th subject in the control group)</li>
+<li><span class="math inline">\(\beta\)</span> is the effect size for the covariate</li>
 </ul>
-<p>The p value is 0.00299 for Prentice modification test, but 0.134 for log-rank test. From Figure, we can see the metastatic group shows an early survival advantage over the locally advanced group, but the survival curves converge after about 10 months.</p>
+<p>Consider the first failure time <span class="math inline">\(t_1\)</span> and we have one failure at <span class="math inline">\(t_1\)</span>, the probability that Patient <span class="math inline">\(i\)</span> is <strong>the</strong> failure is</p>
+<p><span class="math display">\[p_1=p_1(\text{subject i fails})=\frac{h_i(t_1)}{\sum_{k \in R_1}h_k(t_1)}=\frac{h_0(t_1)\psi_i}{\sum_{k\in R_1}h_0(t_1)\psi_k}=\frac{\psi_i}{\sum_{k\in R_i}\psi_k}\]</span></p>
+<p>, where</p>
+<ul>
+<li><span class="math inline">\(R_1\)</span> is the set of subjects at risks at time <span class="math inline">\(t_1\)</span> (i.e., all the subjects before the first failure)</li>
+</ul>
+<p>A key fact here is that the baseline hazard <span class="math inline">\(h_0(t_1)\)</span> cancels out of the numerator and denominator.</p>
+<p>We can repeat this calculation for the second failure time <span class="math inline">\(t_2\)</span> among the set <span class="math inline">\(R_2\)</span>, which is the <span class="math inline">\(R_1\)</span> excluding the failure one and also the censored ones between <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span>. So the partial likelihood is</p>
+<p><span class="math display">\[L(\psi)=p_1p_2...p_D\]</span></p>
+<p>Consider the synethtic data in section 4.1,</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb62-2"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb62-2" aria-hidden="true" tabindex="-1"></a>tt <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">19</span>, <span class="dv">25</span>)</span>
+<span id="cb62-3"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb62-3" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb62-4"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb62-4" aria-hidden="true" tabindex="-1"></a>trt <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>)  <span class="do">## group 0 or 1</span></span>
+<span id="cb62-5"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">survfit</span>(<span class="fu">Surv</span>(tt,delta)<span class="sc">~</span><span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## Call: survfit(formula = Surv(tt, delta) ~ 1)
+## 
+##  time n.risk n.event survival std.err lower 95% CI upper 95% CI
+##     6      6       1    0.833   0.152        0.583            1
+##    10      4       1    0.625   0.213        0.320            1
+##    15      3       1    0.417   0.222        0.147            1
+##    25      1       1    0.000     NaN           NA           NA</code></pre>
+<p>At the first failure time, <span class="math inline">\(t_1=6\)</span> and <span class="math inline">\(R_1\)</span> included six subjects at risk. Considering subject 1, 2, and 4 are in the control group (<span class="math inline">\(z=0\)</span>) and subject 3, 5, and 6 are in the experiment group (<span class="math inline">\(z=1\)</span>), we can have
+<span class="math display">\[\psi_1=\psi_2=\psi_4=e^{0*\beta}=1\]</span></p>
+<p>, and</p>
+<p><span class="math display">\[\psi_3=\psi_5=\psi_6=e^{1*\beta}=\psi\]</span></p>
+<p>We observed the first subject (subject 1) failed at time 6, then</p>
+<p><span class="math display">\[p_1=\frac{1}{3\psi+3}\]</span></p>
+<p>Similarly, at the second failure time (<span class="math inline">\(t_2=10\)</span>), the <span class="math inline">\(R_2\)</span> has 4 subjects at risk, excluding subject 1 failed in the first failure time and subject 2 censored at time 7. Subject 3 failed, and its probability is</p>
+<p><span class="math display">\[p_2=\frac{\psi}{3\psi+1}\]</span>.</p>
+<p>Similarly, we can get</p>
+<p><span class="math display">\[p_3=\frac{1}{2\psi+1}\text{ and }p_4=1\]</span></p>
+<p>So the partial likelihood is</p>
+<p><span class="math display">\[L(\psi)=p_1p_2p_3p_4=\frac{\psi}{(3\psi+3)(3\psi+1)(2\psi+1)}\]</span></p>
+<p>Plug in <span class="math inline">\(\psi=e^{\beta}\)</span> and consider log partial likelihood, we can get</p>
+<p><span class="math display">\[l(\beta)=\beta-ln(e^\beta+3)-ln(3e^\beta+1)-ln(2e^\beta+1)\]</span></p>
+<p>The maximum partial likelihood estimate is</p>
+<p><span class="math display">\[\hat{\beta}_{MPLE}=arg max_\psi l(\beta)\]</span></p>
+<p>, which is independent of the baseline hazard function <span class="math inline">\(h_0(t)\)</span></p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-1" aria-hidden="true" tabindex="-1"></a>plsimple <span class="ot">=</span> <span class="cf">function</span>(beta){</span>
+<span id="cb64-2"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-2" aria-hidden="true" tabindex="-1"></a>    psi <span class="ot">=</span> <span class="fu">exp</span>(beta)</span>
+<span id="cb64-3"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-3" aria-hidden="true" tabindex="-1"></a>    l <span class="ot">=</span> beta<span class="sc">-</span><span class="fu">log</span>(<span class="dv">3</span><span class="sc">*</span>psi<span class="sc">+</span><span class="dv">3</span>)<span class="sc">-</span><span class="fu">log</span>(<span class="dv">3</span><span class="sc">*</span>psi<span class="sc">+</span><span class="dv">1</span>)<span class="sc">-</span><span class="fu">log</span>(<span class="dv">2</span><span class="sc">*</span>psi<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb64-4"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(l)</span>
+<span id="cb64-5"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb64-6"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-7"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="do">## fnscale=1 means the optim will find the maximum</span></span>
+<span id="cb64-8"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-8" aria-hidden="true" tabindex="-1"></a>result <span class="ot">=</span> <span class="fu">optim</span>(<span class="at">par=</span><span class="dv">0</span>, <span class="at">fn=</span>plsimple, <span class="at">method=</span><span class="st">&quot;L-BFGS-B&quot;</span>, <span class="at">control=</span><span class="fu">list</span>(<span class="at">fnscale=</span><span class="sc">-</span><span class="dv">1</span>), <span class="at">lower=</span><span class="sc">-</span><span class="dv">3</span>, <span class="at">upper=</span><span class="dv">1</span>)</span>
+<span id="cb64-9"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-10"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-10" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>par</span></code></pre></div>
+<pre><code>## [1] -1.326129</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb66-1" aria-hidden="true" tabindex="-1"></a>betas <span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">1</span>,<span class="at">length.out=</span><span class="dv">100</span>)</span>
+<span id="cb66-2"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(betas, <span class="fu">plsimple</span>(betas), <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;beta&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;log partial likelihood&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -297,8 +275,8 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
           </div>
         </div>
       </div>
-<a href="nonparametric-survival-curve-estimation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="regression-analysis-using-the-proportional-hazards-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="nonparametric-comparision-of-survival-distributions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

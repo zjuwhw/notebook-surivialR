@@ -19,3 +19,6 @@ left-truncation
 nonparametric-comparision-of-survival-distributions
 comparing-two-groups-of-survival-times
 stratified-tests
+regression-analysis-using-the-proportional-hazards-model
+covariates-and-nonparametric-survival-models
+comparing-two-survival-distributions-using-a-partial-likelihood-function
