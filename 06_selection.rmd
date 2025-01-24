@@ -1,0 +1,12 @@
+# Model Selection and Interpretation
+
+## Covariate Adjustment
+
+## Categorical and Continuous Covariates
+
+## Hypothesis Testing for Nested Models
+
+## The Akaike Information Criterion for Comparing Non-nested Models
+
+## Including Smooth Estimates of Continuous Covariates in a Survival Model
+

@@ -94,8 +94,110 @@ plsimple = function(beta){
 ## fnscale=1 means the optim will find the maximum
 result = optim(par=0, fn=plsimple, method="L-BFGS-B", control=list(fnscale=-1), lower=-3, upper=1)
 
+### MPLE
 result$par
 
-betas = seq(-3,1,length.out=100)
+plsimple(result$par)
+plsimple(0)
+
+betas = seq(-4,1.2,length.out=100)
 plot(betas, plsimple(betas), type="l", xlab="beta", ylab="log partial likelihood")
+points(result$par, plsimple(result$par), col="blue", pch=16)
+points(0, plsimple(0), col="red", pch=16)
 ```
+
+## Partial Likelihood Hypothesis Tests
+
+Three forms of test of $H_0: \beta=0$, which they yield similar results.
+
+- the score function, the first derivative of the log likelihood, $S(\beta)=l'(\beta)$
+- the information function, minus the derivative of the score function, $I(\beta)=-S'(\beta)=-l''(\beta)$, where $l''(\beta)$ is also called Hessian
+
+Plug in parameter estimate $\hat{\beta}$ into information function, we can get observed information
+
+### The Wald Test
+
+we have the MPLE $\hat{\beta}$, we can get the observed information
+
+$$I(\hat{\beta})=-l''(\hat{\beta})$$
+
+The variance of $\hat{\beta}$ is approximately
+
+$$var(\hat{\beta})=1/I(\hat{\beta})\text{ or }se(\hat{\beta})=1/\sqrt{I(\hat{\beta})}$$
+
+The test can be done by
+
+$$\hat{\beta}/se(\hat{\beta}) \sim N(0,1)\text{ or } \hat{\beta}^2 \sim \chi^2_{df=1}$$
+
+### The Score Test
+
+Evaluate the score and inofrmation at the null hpyothesis value of $\beta=0$
+
+$$S(\beta=0)/\sqrt{I(\beta=0)} \sim N(0,1)$$
+
+The score test is equivalent to the log-rank test. It can be carried out without finding the maximum likelihood estimate $\hat{\beta}_{MPLE}$
+
+### The likelihood Ratio Test
+
+$$2[l(\beta=\hat{\beta})-l(\beta=0)] \sim \chi^2_1$$
+
+The key advantage of this test is it is invariant to monotonic transofrmations of $\beta$
+
+Continue with the example above
+
+```{r}
+result.cox = coxph(Surv(tt, delta)~trt)
+summary(result.cox) ## provides the results of these three tests
+```
+
+```{r}
+## score test
+#install.packages("numDeriv")
+library(numDeriv)
+### calculate the S(beta=0)
+beta0 = grad(func=plsimple, x=0)
+### calculate the information
+var0 = -hessian(func=plsimple, x=0)
+beta0^2/var0
+pchisq(beta0^2/var0, df=1, lower.tail=F)
+```
+```{r}
+### Wald test
+### calculate the information function at beta_MPLE
+-hessian(func=plsimple, x=result$par)
+### calculate the variance
+1/(-hessian(func=plsimple, x=result$par))
+### calculate the test statistics
+result$par^2*(-hessian(func=plsimple, x=result$par))
+```
+
+```{r}
+### likelihood ratio statistics
+l_full = plsimple(result$par)
+l_reduce = plsimple(0)
+2*(l_full-l_reduce)
+```
+
+Two additional output are often useful. The first one is statistic "r-squared" (or Pseudo $R^2$), 
+
+$$R^2_{Cox\&Snell}=1-(\frac{L(0)}{L(\hat{\beta})})^{2/n}=1-e^{2/n[l(0)-l(\hat{\beta})]}$$
+
+$$R^2_{Nagelkerke}=\frac{R^2_{Cox\&Snell}}{1-e^{2/n*l(0)}}$$
+
+, where $l()$ is the log-partial likelihood function and $L()$ is the partial likelihood function
+
+```{r}
+### r-squared (which is not included in the current version of survival R package: see https://stackoverflow.com/questions/56071385/r-squared-missing-from-output-of-coxph)
+CSR2 = 1-exp((2/length(tt))*(l_reduce-l_full))
+R2max = 1-exp((2/length(tt))*(l_reduce))
+NKR2 = CSR2/R2max
+CSR2
+R2max
+NKR2
+```
+
+The second one is Concordance index, or c-index, or Harrell's C, a measure of the predictive discrimination of a covariate.
+
+## The Partial Likelihood with Multiple Covariates
+
+## Handling of Tied Survival Times

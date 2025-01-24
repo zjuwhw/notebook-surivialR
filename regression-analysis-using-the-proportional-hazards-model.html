@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="nonparametric-comparision-of-survival-distributions.html"/>
-
+<link rel="next" href="model-selection-and-interpretation.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -171,6 +171,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="5.1" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#covariates-and-nonparametric-survival-models"><i class="fa fa-check"></i><b>5.1</b> Covariates and nonparametric Survival Models</a></li>
 <li class="chapter" data-level="5.2" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#comparing-two-survival-distributions-using-a-partial-likelihood-function"><i class="fa fa-check"></i><b>5.2</b> Comparing Two Survival Distributions Using a Partial Likelihood Function</a></li>
+<li class="chapter" data-level="5.3" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#partial-likelihood-hypothesis-tests"><i class="fa fa-check"></i><b>5.3</b> Partial Likelihood Hypothesis Tests</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#the-wald-test"><i class="fa fa-check"></i><b>5.3.1</b> The Wald Test</a></li>
+<li class="chapter" data-level="5.3.2" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#the-score-test"><i class="fa fa-check"></i><b>5.3.2</b> The Score Test</a></li>
+<li class="chapter" data-level="5.3.3" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#the-likelihood-ratio-test"><i class="fa fa-check"></i><b>5.3.3</b> The likelihood Ratio Test</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#the-partial-likelihood-with-multiple-covariates"><i class="fa fa-check"></i><b>5.4</b> The Partial Likelihood with Multiple Covariates</a></li>
+<li class="chapter" data-level="5.5" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#handling-of-tied-survival-times"><i class="fa fa-check"></i><b>5.5</b> Handling of Tied Survival Times</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="model-selection-and-interpretation.html"><a href="model-selection-and-interpretation.html"><i class="fa fa-check"></i><b>6</b> Model Selection and Interpretation</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="model-selection-and-interpretation.html"><a href="model-selection-and-interpretation.html#covariate-adjustment"><i class="fa fa-check"></i><b>6.1</b> Covariate Adjustment</a></li>
+<li class="chapter" data-level="6.2" data-path="model-selection-and-interpretation.html"><a href="model-selection-and-interpretation.html#categorical-and-continuous-covariates"><i class="fa fa-check"></i><b>6.2</b> Categorical and Continuous Covariates</a></li>
+<li class="chapter" data-level="6.3" data-path="model-selection-and-interpretation.html"><a href="model-selection-and-interpretation.html#hypothesis-testing-for-nested-models"><i class="fa fa-check"></i><b>6.3</b> Hypothesis Testing for Nested Models</a></li>
+<li class="chapter" data-level="6.4" data-path="model-selection-and-interpretation.html"><a href="model-selection-and-interpretation.html#the-akaike-information-criterion-for-comparing-non-nested-models"><i class="fa fa-check"></i><b>6.4</b> The Akaike Information Criterion for Comparing Non-nested Models</a></li>
+<li class="chapter" data-level="6.5" data-path="model-selection-and-interpretation.html"><a href="model-selection-and-interpretation.html#including-smooth-estimates-of-continuous-covariates-in-a-survival-model"><i class="fa fa-check"></i><b>6.5</b> Including Smooth Estimates of Continuous Covariates in a Survival Model</a></li>
 </ul></li>
 <li class="divider"></li>
 Published with <a href="https://github.com/rstudio/bookdown" target="blank">bookdown</a> by <a href="http://zjuwhw.github.io/" target="blank">zjuwhw</a>
@@ -262,11 +278,117 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
 <span id="cb64-7"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="do">## fnscale=1 means the optim will find the maximum</span></span>
 <span id="cb64-8"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-8" aria-hidden="true" tabindex="-1"></a>result <span class="ot">=</span> <span class="fu">optim</span>(<span class="at">par=</span><span class="dv">0</span>, <span class="at">fn=</span>plsimple, <span class="at">method=</span><span class="st">&quot;L-BFGS-B&quot;</span>, <span class="at">control=</span><span class="fu">list</span>(<span class="at">fnscale=</span><span class="sc">-</span><span class="dv">1</span>), <span class="at">lower=</span><span class="sc">-</span><span class="dv">3</span>, <span class="at">upper=</span><span class="dv">1</span>)</span>
 <span id="cb64-9"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-10"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-10" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>par</span></code></pre></div>
+<span id="cb64-10"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="do">### MPLE</span></span>
+<span id="cb64-11"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb64-11" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>par</span></code></pre></div>
 <pre><code>## [1] -1.326129</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb66-1" aria-hidden="true" tabindex="-1"></a>betas <span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">1</span>,<span class="at">length.out=</span><span class="dv">100</span>)</span>
-<span id="cb66-2"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(betas, <span class="fu">plsimple</span>(betas), <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;beta&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;log partial likelihood&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plsimple</span>(result<span class="sc">$</span>par)</span></code></pre></div>
+<pre><code>## [1] -3.671981</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plsimple</span>(<span class="dv">0</span>)</span></code></pre></div>
+<pre><code>## [1] -4.276666</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb70-1" aria-hidden="true" tabindex="-1"></a>betas <span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="fl">1.2</span>,<span class="at">length.out=</span><span class="dv">100</span>)</span>
+<span id="cb70-2"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(betas, <span class="fu">plsimple</span>(betas), <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;beta&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;log partial likelihood&quot;</span>)</span>
+<span id="cb70-3"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(result<span class="sc">$</span>par, <span class="fu">plsimple</span>(result<span class="sc">$</span>par), <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">pch=</span><span class="dv">16</span>)</span>
+<span id="cb70-4"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">0</span>, <span class="fu">plsimple</span>(<span class="dv">0</span>), <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">pch=</span><span class="dv">16</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+<div id="partial-likelihood-hypothesis-tests" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Partial Likelihood Hypothesis Tests<a href="regression-analysis-using-the-proportional-hazards-model.html#partial-likelihood-hypothesis-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Three forms of test of <span class="math inline">\(H_0: \beta=0\)</span>, which they yield similar results.</p>
+<ul>
+<li>the score function, the first derivative of the log likelihood, <span class="math inline">\(S(\beta)=l&#39;(\beta)\)</span></li>
+<li>the information function, minus the derivative of the score function, <span class="math inline">\(I(\beta)=-S&#39;(\beta)=-l&#39;&#39;(\beta)\)</span>, where <span class="math inline">\(l&#39;&#39;(\beta)\)</span> is also called Hessian</li>
+</ul>
+<p>Plug in parameter estimate <span class="math inline">\(\hat{\beta}\)</span> into information function, we can get observed information</p>
+<div id="the-wald-test" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> The Wald Test<a href="regression-analysis-using-the-proportional-hazards-model.html#the-wald-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>we have the MPLE <span class="math inline">\(\hat{\beta}\)</span>, we can get the observed information</p>
+<p><span class="math display">\[I(\hat{\beta})=-l&#39;&#39;(\hat{\beta})\]</span></p>
+<p>The variance of <span class="math inline">\(\hat{\beta}\)</span> is approximately</p>
+<p><span class="math display">\[var(\hat{\beta})=1/I(\hat{\beta})\text{ or }se(\hat{\beta})=1/\sqrt{I(\hat{\beta})}\]</span></p>
+<p>The test can be done by</p>
+<p><span class="math display">\[\hat{\beta}/se(\hat{\beta}) \sim N(0,1)\text{ or } \hat{\beta}^2 \sim \chi^2_{df=1}\]</span></p>
+</div>
+<div id="the-score-test" class="section level3 hasAnchor" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> The Score Test<a href="regression-analysis-using-the-proportional-hazards-model.html#the-score-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Evaluate the score and inofrmation at the null hpyothesis value of <span class="math inline">\(\beta=0\)</span></p>
+<p><span class="math display">\[S(\beta=0)/\sqrt{I(\beta=0)} \sim N(0,1)\]</span></p>
+<p>The score test is equivalent to the log-rank test. It can be carried out without finding the maximum likelihood estimate <span class="math inline">\(\hat{\beta}_{MPLE}\)</span></p>
+</div>
+<div id="the-likelihood-ratio-test" class="section level3 hasAnchor" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> The likelihood Ratio Test<a href="regression-analysis-using-the-proportional-hazards-model.html#the-likelihood-ratio-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[2[l(\beta=\hat{\beta})-l(\beta=0)] \sim \chi^2_1\]</span></p>
+<p>The key advantage of this test is it is invariant to monotonic transofrmations of <span class="math inline">\(\beta\)</span></p>
+<p>Continue with the example above</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb71-1" aria-hidden="true" tabindex="-1"></a>result.cox <span class="ot">=</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(tt, delta)<span class="sc">~</span>trt)</span>
+<span id="cb71-2"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(result.cox) <span class="do">## provides the results of these three tests</span></span></code></pre></div>
+<pre><code>## Call:
+## coxph(formula = Surv(tt, delta) ~ trt)
+## 
+##   n= 6, number of events= 4 
+## 
+##        coef exp(coef) se(coef)     z Pr(&gt;|z|)
+## trt -1.3261    0.2655   1.2509 -1.06    0.289
+## 
+##     exp(coef) exp(-coef) lower .95 upper .95
+## trt    0.2655      3.766   0.02287     3.082
+## 
+## Concordance= 0.7  (se = 0.116 )
+## Likelihood ratio test= 1.21  on 1 df,   p=0.3
+## Wald test            = 1.12  on 1 df,   p=0.3
+## Score (logrank) test = 1.27  on 1 df,   p=0.3</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="do">## score test</span></span>
+<span id="cb73-2"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;numDeriv&quot;)</span></span>
+<span id="cb73-3"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(numDeriv)</span>
+<span id="cb73-4"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="do">### calculate the S(beta=0)</span></span>
+<span id="cb73-5"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb73-5" aria-hidden="true" tabindex="-1"></a>beta0 <span class="ot">=</span> <span class="fu">grad</span>(<span class="at">func=</span>plsimple, <span class="at">x=</span><span class="dv">0</span>)</span>
+<span id="cb73-6"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb73-6" aria-hidden="true" tabindex="-1"></a><span class="do">### calculate the information</span></span>
+<span id="cb73-7"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb73-7" aria-hidden="true" tabindex="-1"></a>var0 <span class="ot">=</span> <span class="sc">-</span><span class="fu">hessian</span>(<span class="at">func=</span>plsimple, <span class="at">x=</span><span class="dv">0</span>)</span>
+<span id="cb73-8"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb73-8" aria-hidden="true" tabindex="-1"></a>beta0<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>var0</span></code></pre></div>
+<pre><code>##          [,1]
+## [1,] 1.273694</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(beta0<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>var0, <span class="at">df=</span><span class="dv">1</span>, <span class="at">lower.tail=</span>F)</span></code></pre></div>
+<pre><code>##           [,1]
+## [1,] 0.2590748</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Wald test</span></span>
+<span id="cb77-2"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="do">### calculate the information function at beta_MPLE</span></span>
+<span id="cb77-3"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">hessian</span>(<span class="at">func=</span>plsimple, <span class="at">x=</span>result<span class="sc">$</span>par)</span></code></pre></div>
+<pre><code>##          [,1]
+## [1,] 0.639117</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="do">### calculate the variance</span></span>
+<span id="cb79-2"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>(<span class="sc">-</span><span class="fu">hessian</span>(<span class="at">func=</span>plsimple, <span class="at">x=</span>result<span class="sc">$</span>par))</span></code></pre></div>
+<pre><code>##          [,1]
+## [1,] 1.564659</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="do">### calculate the test statistics</span></span>
+<span id="cb81-2"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb81-2" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>par<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(<span class="sc">-</span><span class="fu">hessian</span>(<span class="at">func=</span>plsimple, <span class="at">x=</span>result<span class="sc">$</span>par))</span></code></pre></div>
+<pre><code>##          [,1]
+## [1,] 1.123963</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="do">### likelihood ratio statistics</span></span>
+<span id="cb83-2"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb83-2" aria-hidden="true" tabindex="-1"></a>l_full <span class="ot">=</span> <span class="fu">plsimple</span>(result<span class="sc">$</span>par)</span>
+<span id="cb83-3"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb83-3" aria-hidden="true" tabindex="-1"></a>l_reduce <span class="ot">=</span> <span class="fu">plsimple</span>(<span class="dv">0</span>)</span>
+<span id="cb83-4"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(l_full<span class="sc">-</span>l_reduce)</span></code></pre></div>
+<pre><code>## [1] 1.209369</code></pre>
+<p>Two additional output are often useful. The first one is statistic “r-squared” (or Pseudo <span class="math inline">\(R^2\)</span>),</p>
+<p><span class="math display">\[R^2_{Cox\&amp;Snell}=1-(\frac{L(0)}{L(\hat{\beta})})^{2/n}=1-e^{2/n[l(0)-l(\hat{\beta})]}\]</span></p>
+<p><span class="math display">\[R^2_{Nagelkerke}=\frac{R^2_{Cox\&amp;Snell}}{1-e^{2/n*l(0)}}\]</span></p>
+<p>, where <span class="math inline">\(l()\)</span> is the log-partial likelihood function and <span class="math inline">\(L()\)</span> is the partial likelihood function</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="do">### r-squared (which is not included in the current version of survival R package: see https://stackoverflow.com/questions/56071385/r-squared-missing-from-output-of-coxph)</span></span>
+<span id="cb85-2"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb85-2" aria-hidden="true" tabindex="-1"></a>CSR2 <span class="ot">=</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>((<span class="dv">2</span><span class="sc">/</span><span class="fu">length</span>(tt))<span class="sc">*</span>(l_reduce<span class="sc">-</span>l_full))</span>
+<span id="cb85-3"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb85-3" aria-hidden="true" tabindex="-1"></a>R2max <span class="ot">=</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>((<span class="dv">2</span><span class="sc">/</span><span class="fu">length</span>(tt))<span class="sc">*</span>(l_reduce))</span>
+<span id="cb85-4"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb85-4" aria-hidden="true" tabindex="-1"></a>NKR2 <span class="ot">=</span> CSR2<span class="sc">/</span>R2max</span>
+<span id="cb85-5"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb85-5" aria-hidden="true" tabindex="-1"></a>CSR2</span></code></pre></div>
+<pre><code>## [1] 0.1825467</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb87-1" aria-hidden="true" tabindex="-1"></a>R2max</span></code></pre></div>
+<pre><code>## [1] 0.7596251</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb89-1" aria-hidden="true" tabindex="-1"></a>NKR2</span></code></pre></div>
+<pre><code>## [1] 0.2403116</code></pre>
+<p>The second one is Concordance index, or c-index, or Harrell’s C, a measure of the predictive discrimination of a covariate.</p>
+</div>
+</div>
+<div id="the-partial-likelihood-with-multiple-covariates" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> The Partial Likelihood with Multiple Covariates<a href="regression-analysis-using-the-proportional-hazards-model.html#the-partial-likelihood-with-multiple-covariates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="handling-of-tied-survival-times" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Handling of Tied Survival Times<a href="regression-analysis-using-the-proportional-hazards-model.html#handling-of-tied-survival-times" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 </div>
 </div>
@@ -275,8 +397,8 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
           </div>
         </div>
       </div>
-<a href="nonparametric-comparision-of-survival-distributions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="nonparametric-comparision-of-survival-distributions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-selection-and-interpretation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -22,3 +22,15 @@ stratified-tests
 regression-analysis-using-the-proportional-hazards-model
 covariates-and-nonparametric-survival-models
 comparing-two-survival-distributions-using-a-partial-likelihood-function
+partial-likelihood-hypothesis-tests
+the-wald-test
+the-score-test
+the-likelihood-ratio-test
+the-partial-likelihood-with-multiple-covariates
+handling-of-tied-survival-times
+model-selection-and-interpretation
+covariate-adjustment
+categorical-and-continuous-covariates
+hypothesis-testing-for-nested-models
+the-akaike-information-criterion-for-comparing-non-nested-models
+including-smooth-estimates-of-continuous-covariates-in-a-survival-model
