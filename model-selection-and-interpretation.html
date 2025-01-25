@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="regression-analysis-using-the-proportional-hazards-model.html"/>
-
+<link rel="next" href="model-diagnostics.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -178,7 +178,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3.3" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#the-likelihood-ratio-test"><i class="fa fa-check"></i><b>5.3.3</b> The likelihood Ratio Test</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#the-partial-likelihood-with-multiple-covariates"><i class="fa fa-check"></i><b>5.4</b> The Partial Likelihood with Multiple Covariates</a></li>
-<li class="chapter" data-level="5.5" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#handling-of-tied-survival-times"><i class="fa fa-check"></i><b>5.5</b> Handling of Tied Survival Times</a></li>
+<li class="chapter" data-level="5.5" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#estimating-the-baseline-survival-function"><i class="fa fa-check"></i><b>5.5</b> Estimating the Baseline Survival Function</a></li>
+<li class="chapter" data-level="5.6" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#handling-of-tied-survival-times"><i class="fa fa-check"></i><b>5.6</b> Handling of Tied Survival Times</a></li>
+<li class="chapter" data-level="5.7" data-path="regression-analysis-using-the-proportional-hazards-model.html"><a href="regression-analysis-using-the-proportional-hazards-model.html#left-truncation-1"><i class="fa fa-check"></i><b>5.7</b> Left Truncation</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="model-selection-and-interpretation.html"><a href="model-selection-and-interpretation.html"><i class="fa fa-check"></i><b>6</b> Model Selection and Interpretation</a>
 <ul>
@@ -188,6 +190,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4" data-path="model-selection-and-interpretation.html"><a href="model-selection-and-interpretation.html#the-akaike-information-criterion-for-comparing-non-nested-models"><i class="fa fa-check"></i><b>6.4</b> The Akaike Information Criterion for Comparing Non-nested Models</a></li>
 <li class="chapter" data-level="6.5" data-path="model-selection-and-interpretation.html"><a href="model-selection-and-interpretation.html#including-smooth-estimates-of-continuous-covariates-in-a-survival-model"><i class="fa fa-check"></i><b>6.5</b> Including Smooth Estimates of Continuous Covariates in a Survival Model</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>7</b> Model Diagnostics</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#assessing-goodness-of-fit-using-residuals"><i class="fa fa-check"></i><b>7.1</b> Assessing Goodness of Fit Using Residuals</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="time-dependent-covariates.html"><a href="time-dependent-covariates.html"><i class="fa fa-check"></i><b>8</b> Time Dependent Covariates</a></li>
+<li class="chapter" data-level="9" data-path="multiple-survival-outcomes-and-competing-risks.html"><a href="multiple-survival-outcomes-and-competing-risks.html"><i class="fa fa-check"></i><b>9</b> Multiple Survival Outcomes and Competing Risks</a></li>
+<li class="chapter" data-level="10" data-path="parametric-models.html"><a href="parametric-models.html"><i class="fa fa-check"></i><b>10</b> Parametric Models</a></li>
+<li class="chapter" data-level="11" data-path="sample-size-determination-for-survival-studies.html"><a href="sample-size-determination-for-survival-studies.html"><i class="fa fa-check"></i><b>11</b> Sample Size Determination for Survival Studies</a></li>
 <li class="divider"></li>
 Published with <a href="https://github.com/rstudio/bookdown" target="blank">bookdown</a> by <a href="http://zjuwhw.github.io/" target="blank">zjuwhw</a>
 
@@ -232,8 +242,8 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
           </div>
         </div>
       </div>
-<a href="regression-analysis-using-the-proportional-hazards-model.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="regression-analysis-using-the-proportional-hazards-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-diagnostics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

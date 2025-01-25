@@ -1,0 +1,4 @@
+# Model Diagnostics
+
+## Assessing Goodness of Fit Using Residuals
+

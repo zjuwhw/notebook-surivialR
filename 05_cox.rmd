@@ -200,4 +200,63 @@ The second one is Concordance index, or c-index, or Harrell's C, a measure of th
 
 ## The Partial Likelihood with Multiple Covariates
 
+Extend from single binary covariate to multiple covariates,
+
+$$h_i(t_j)=h_0(t_j)\psi_i\text{ and }\psi_i=e^{z_i'\beta}$$
+
+, where
+- $i$ is the index of subject, $i=1,...,n$
+- $j$ is the index of failure time, $j=1,...,D$
+- $\psi_i$ is the hazard ratio (relative to the baseeline hazard) for subject i
+- $z_i$ is a vector of covariates with the length of p
+- $\beta$ is a vector of effect sizes with the length of p
+
+The "risk set", the set of all individuals at risk, at j-th failure time, is devoted by $R_i$. The partial likelihood is
+
+$$L(\beta)=\prod_{j=1}^D\frac{h_0(t_j)\psi_{(j)}}{\sum_{k \in R_j}h_0(t_j)\psi_k}=\prod_{j=1}^D\frac{\psi_{(j)}}{\sum_{k \in R_j}\psi_k}$$
+, where $\psi_{(j)}$ is the hazard ratio for the individual who experienced the failure event at time $t_j$. The function is called a partial likelihood because it lacks factors for the censored observations.
+
+The log partial likelihood is 
+
+$$l(\beta)=\sum_{j=1}^D[z_{(j)}'\beta-log(\sum_{k \in R_j}e^{z_k'\beta})]$$
+, where $z'_{j}$ is the covariate vector of the individual who experiences the event at $t_j$
+
+The score function, $S(\beta)$, is the first derivative of $l(\beta)$, which has p components (p-length vector). In the special case where $z_i$ is a single binary covariate, $S(\beta=0)$ is the log-rank statistics.
+
+The observed information matrix, $I{\beta}$ is the negative Hessian matrix, where Hessian matrix is the second derivative of the log-likelihood with all pairwise combination of the covariates ($p \times p$ matrix).
+
+The Wald, score, and likelihood ratio test statistics of $H_0:\beta=0$ are
+
+$$\chi_w^2=\hat{\beta}'I(\beta)\hat{\beta}$$
+
+$$\chi_S^2=S'(\beta=0)I^{-1}(\beta=0)S(\beta=0)$$
+
+$$\chi_l^2=2[l(\beta=\hat{\beta})-l(\beta=0)]$$
+
+They are all asymptotically chi-square random variables with p-1 degrees of freedom.
+
+
+## Estimating the Baseline Survival Function
+
+An estimate of the baseline hazard function is given by 
+
+$$h_0(t_j)=\frac{d_j}{\sum_{k\in R_j}e^{z_k\hat{\beta}}}$$
+
+The baseline survival function is
+
+$$S_0(t)=exp[-H_0(t)]$$
+
+, where $H_0(t)$ is a cumulative sum of the estimated hazards $h_0(t_j)$ for $t_j \le t$.
+
+The survival function for a particular individual with covariate value z is
+
+$$S(t|z)=[S_0(t)]$^{exp(z\hat{\beta})}$$
+
+```{r}
+basehaz(result.cox, centered=F)
+### return the cumulative hazard
+```
+
 ## Handling of Tied Survival Times
+
+## Left Truncation

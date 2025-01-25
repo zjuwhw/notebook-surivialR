@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3 Nonparametric Survival Curve Estimation | _main.knit</title>
+  <title>9 Multiple Survival Outcomes and Competing Risks | _main.knit</title>
   <meta name="description" content="" />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3 Nonparametric Survival Curve Estimation | _main.knit" />
+  <meta property="og:title" content="9 Multiple Survival Outcomes and Competing Risks | _main.knit" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 Nonparametric Survival Curve Estimation | _main.knit" />
+  <meta name="twitter:title" content="9 Multiple Survival Outcomes and Competing Risks | _main.knit" />
   
   
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="basic-principles-of-survival-analysis.html"/>
-<link rel="next" href="nonparametric-comparision-of-survival-distributions.html"/>
+<link rel="prev" href="time-dependent-covariates.html"/>
+<link rel="next" href="parametric-models.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -218,121 +218,17 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="nonparametric-survival-curve-estimation" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">3</span> Nonparametric Survival Curve Estimation<a href="nonparametric-survival-curve-estimation.html#nonparametric-survival-curve-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="nonparametric-estimation-of-the-survival-function" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Nonparametric Estimation of the Survival Function<a href="nonparametric-survival-curve-estimation.html#nonparametric-estimation-of-the-survival-function" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>product-limit estimator/Kaplan-Meier estimator (Kaplan and Meier, 1958): the product over the failure times of the conditional probabilities of surviving to the next failure time,</p>
-<p><span class="math display">\[\hat{S}(t)=\prod_{t_i \le t}(1-\hat{q}_i) = \prod_{t_i \le t}(1-\frac{d_i}{n_i})\]</span></p>
-<p>, where</p>
-<ul>
-<li><span class="math inline">\(n_i\)</span> is the number of subjects at risk at time <span class="math inline">\(t_i\)</span></li>
-<li><span class="math inline">\(d_i\)</span> is the number of individuals who fail at that time.</li>
-</ul>
-<p>Back to example 1.1</p>
-<p><img src="images/table3.1-figure3.1.png" /></p>
-<p>The median survival time is at t=6, which is the smallest time t such that S(t)&lt;=0.5.</p>
-<p>Based on “delta method”, the sampling variance of <span class="math inline">\(log(\hat{S}(t))\)</span>,</p>
-<p><span class="math display">\[var(log \hat{S}(t))=\sum_{t_i \le t}var(log(1-\hat{q}_i))\approx \sum_{t_i \le t}\frac{d_i}{n_i(n_i-d_i)}\]</span></p>
-<p>Use the delta method again,</p>
-<p><span class="math display">\[var(\hat{S}(t)) \approx [\hat{S}(t)]^2\sum_{t_i \le t}\frac{d_i}{n_i(n_i-d_i)}\]</span></p>
-<p>Another (more satisfying) approach is via the complementary log-log transformation of <span class="math inline">\(\hat{S}(t)\)</span></p>
-<p><span class="math display">\[var(log[-log \hat{S}(t)]) \approx \frac{1}{[log \hat{S}(t)]^2}\sum_{t_i \le t}\frac{d_i}{n_i(n_i-d_i)}\]</span></p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="nonparametric-survival-curve-estimation.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb38-2"><a href="nonparametric-survival-curve-estimation.html#cb38-2" aria-hidden="true" tabindex="-1"></a>time <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">4</span>)</span>
-<span id="cb38-3"><a href="nonparametric-survival-curve-estimation.html#cb38-3" aria-hidden="true" tabindex="-1"></a>status<span class="ot">=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb38-4"><a href="nonparametric-survival-curve-estimation.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Surv</span>(time, status)</span></code></pre></div>
-<pre><code>## [1] 7+ 6  6+ 5+ 2  4</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="nonparametric-survival-curve-estimation.html#cb40-1" aria-hidden="true" tabindex="-1"></a>result.km <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status)<span class="sc">~</span><span class="dv">1</span>)</span>
-<span id="cb40-2"><a href="nonparametric-survival-curve-estimation.html#cb40-2" aria-hidden="true" tabindex="-1"></a>result.km</span></code></pre></div>
-<pre><code>## Call: survfit(formula = Surv(time, status) ~ 1)
-## 
-##      n events median 0.95LCL 0.95UCL
-## [1,] 6      3      6       4      NA</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="nonparametric-survival-curve-estimation.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(result.km)</span></code></pre></div>
-<pre><code>## Call: survfit(formula = Surv(time, status) ~ 1)
-## 
-##  time n.risk n.event survival std.err lower 95% CI upper 95% CI
-##     2      6       1    0.833   0.152        0.583            1
-##     4      5       1    0.667   0.192        0.379            1
-##     6      3       1    0.444   0.222        0.167            1</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="nonparametric-survival-curve-estimation.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="do">## the default value for conf.type option is &quot;log&quot;</span></span>
-<span id="cb44-2"><a href="nonparametric-survival-curve-estimation.html#cb44-2" aria-hidden="true" tabindex="-1"></a>result.km2 <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status)<span class="sc">~</span><span class="dv">1</span>, <span class="at">conf.type=</span><span class="st">&quot;log-log&quot;</span>)</span>
-<span id="cb44-3"><a href="nonparametric-survival-curve-estimation.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(result.km2)</span></code></pre></div>
-<pre><code>## Call: survfit(formula = Surv(time, status) ~ 1, conf.type = &quot;log-log&quot;)
-## 
-##  time n.risk n.event survival std.err lower 95% CI upper 95% CI
-##     2      6       1    0.833   0.152       0.2731        0.975
-##     4      5       1    0.667   0.192       0.1946        0.904
-##     6      3       1    0.444   0.222       0.0662        0.785</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="nonparametric-survival-curve-estimation.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb46-2"><a href="nonparametric-survival-curve-estimation.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(result.km, <span class="at">main=</span><span class="st">&quot;log&quot;</span>)</span>
-<span id="cb46-3"><a href="nonparametric-survival-curve-estimation.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(result.km2, <span class="at">main=</span><span class="st">&quot;log-log&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<p>An alternative estimator of the survival function is Nelson-Aalen estimator/Fleming and Harrington, based on the relationship of the survival function to the hazard function</p>
-<p><span class="math display">\[S(t)=e^{-H(t)}\text{ and } H(t)=\sum_{t_i \le t}\frac{d_i}{n_i}\]</span></p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="nonparametric-survival-curve-estimation.html#cb47-1" aria-hidden="true" tabindex="-1"></a>result.fh <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status)<span class="sc">~</span><span class="dv">1</span>, <span class="at">conf.type=</span><span class="st">&quot;log-log&quot;</span>, <span class="at">type=</span><span class="st">&quot;fh&quot;</span>)</span>
-<span id="cb47-2"><a href="nonparametric-survival-curve-estimation.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(result.fh)</span></code></pre></div>
-<pre><code>## Call: survfit(formula = Surv(time, status) ~ 1, conf.type = &quot;log-log&quot;, 
-##     type = &quot;fh&quot;)
-## 
-##  time n.risk n.event survival std.err lower 95% CI upper 95% CI
-##     2      6       1    0.846   0.141        0.306        0.977
-##     4      5       1    0.693   0.180        0.229        0.913
-##     6      3       1    0.497   0.210        0.101        0.807</code></pre>
-<p>Back to example 1.2</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="nonparametric-survival-curve-estimation.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(asaur)</span>
-<span id="cb49-2"><a href="nonparametric-survival-curve-estimation.html#cb49-2" aria-hidden="true" tabindex="-1"></a>timeMonths <span class="ot">=</span> gastricXelox<span class="sc">$</span>timeWeeks <span class="sc">*</span> <span class="dv">7</span> <span class="sc">/</span><span class="fl">30.25</span></span>
-<span id="cb49-3"><a href="nonparametric-survival-curve-estimation.html#cb49-3" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">=</span> gastricXelox<span class="sc">$</span>delta</span>
-<span id="cb49-4"><a href="nonparametric-survival-curve-estimation.html#cb49-4" aria-hidden="true" tabindex="-1"></a>result.km <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(timeMonths, delta)<span class="sc">~</span><span class="dv">1</span>, <span class="at">conf.type=</span><span class="st">&quot;log-log&quot;</span>)</span>
-<span id="cb49-5"><a href="nonparametric-survival-curve-estimation.html#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(result.km, <span class="at">conf.int=</span>T, <span class="at">mark=</span><span class="st">&quot;|&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Time in months&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Survival probability&quot;</span>,</span>
-<span id="cb49-6"><a href="nonparametric-survival-curve-estimation.html#cb49-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Progression-free survival in gastric cancer patients&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-</div>
-<div id="finding-the-median-survival-and-a-confidence-interval-for-the-median" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Finding the median survival and a confidence interval for the median<a href="nonparametric-survival-curve-estimation.html#finding-the-median-survival-and-a-confidence-interval-for-the-median" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Formally, the median survival time is defined as <span class="math inline">\(\hat{t}_{med}=inf\{t: \hat{S}(t) \le 0.5\}\)</span>. That is the smallest t such that the survival function is less than or equal to 0.5.</p>
-<p>To find a <span class="math inline">\(1-\alpha\)</span> confidence interval for the median, we consider the following inequality:</p>
-<p><span class="math display">\[-z_{\alpha/2}\le \frac{g(\hat{S}(t))-g(0.5)}{\sqrt{var[g(\hat{S}(t))]}} \le z_{\alpha/2}\]</span></p>
-<p>, where <span class="math inline">\(g(u)=log[-log(u)]\)</span> and <span class="math inline">\(var[g(\hat{S}(t))]\)</span> has been given above</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="nonparametric-survival-curve-estimation.html#cb50-1" aria-hidden="true" tabindex="-1"></a>result.km</span></code></pre></div>
-<pre><code>## Call: survfit(formula = Surv(timeMonths, delta) ~ 1, conf.type = &quot;log-log&quot;)
-## 
-##       n events median 0.95LCL 0.95UCL
-## [1,] 48     32   10.3    5.79    15.3</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="nonparametric-survival-curve-estimation.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(result.km)</span>
-<span id="cb52-2"><a href="nonparametric-survival-curve-estimation.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fl">0.5</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb52-3"><a href="nonparametric-survival-curve-estimation.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="at">x0 =</span> <span class="fl">10.3</span>, <span class="at">y0 =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">x1 =</span> <span class="fl">10.3</span>, <span class="at">y1 =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb52-4"><a href="nonparametric-survival-curve-estimation.html#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="at">x0 =</span> <span class="fl">5.79</span>, <span class="at">y0 =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">x1 =</span> <span class="fl">5.79</span>, <span class="at">y1 =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb52-5"><a href="nonparametric-survival-curve-estimation.html#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="at">x0 =</span> <span class="fl">15.3</span>, <span class="at">y0 =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">x1 =</span> <span class="fl">15.3</span>, <span class="at">y1 =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-</div>
-<div id="median-follow-up-time" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> Median Follow-up Time<a href="nonparametric-survival-curve-estimation.html#median-follow-up-time" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A simple definition is to consider all of the survival times</p>
-<p>A perhaps better way is to first switch the censoring and death indicators, and then computes the KM estimate. This method is also known as the “reverse” Kaplan-Meier.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="nonparametric-survival-curve-estimation.html#cb53-1" aria-hidden="true" tabindex="-1"></a>delta.followup <span class="ot">=</span> <span class="dv">1</span><span class="sc">-</span>delta</span>
-<span id="cb53-2"><a href="nonparametric-survival-curve-estimation.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">survfit</span>(<span class="fu">Surv</span>(timeMonths, delta.followup)<span class="sc">~</span><span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## Call: survfit(formula = Surv(timeMonths, delta.followup) ~ 1)
-## 
-##       n events median 0.95LCL 0.95UCL
-## [1,] 48     16   27.8    21.1    50.2</code></pre>
-</div>
-<div id="obtaining-a-smoothed-hazard-and-survival-function-estimate" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> Obtaining a smoothed Hazard and Survival Function estimate<a href="nonparametric-survival-curve-estimation.html#obtaining-a-smoothed-hazard-and-survival-function-estimate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-</div>
-<div id="left-truncation" class="section level2 hasAnchor" number="3.5">
-<h2><span class="header-section-number">3.5</span> Left Truncation<a href="nonparametric-survival-curve-estimation.html#left-truncation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="multiple-survival-outcomes-and-competing-risks" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> Multiple Survival Outcomes and Competing Risks<a href="multiple-survival-outcomes-and-competing-risks.html#multiple-survival-outcomes-and-competing-risks" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="basic-principles-of-survival-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="nonparametric-comparision-of-survival-distributions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="time-dependent-covariates.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="parametric-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
