@@ -426,7 +426,7 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
 <p><span class="math display">\[S_0(t)=exp[-H_0(t)]\]</span></p>
 <p>, where <span class="math inline">\(H_0(t)\)</span> is a cumulative sum of the estimated hazards <span class="math inline">\(h_0(t_j)\)</span> for <span class="math inline">\(t_j \le t\)</span>.</p>
 <p>The survival function for a particular individual with covariate value z is</p>
-<p><span class="math display">\[S(t|z)=[S_0(t)]$^{exp(z\hat{\beta})}\]</span></p>
+<p><span class="math display">\[S(t|z)=[S_0(t)]^{exp(z\hat{\beta})}\]</span></p>
 <div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="regression-analysis-using-the-proportional-hazards-model.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">basehaz</span>(result.cox, <span class="at">centered=</span>F)</span></code></pre></div>
 <pre><code>##      hazard time
 ## 1 0.2633999    6

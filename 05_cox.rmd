@@ -250,7 +250,7 @@ $$S_0(t)=exp[-H_0(t)]$$
 
 The survival function for a particular individual with covariate value z is
 
-$$S(t|z)=[S_0(t)]$^{exp(z\hat{\beta})}$$
+$$S(t|z)=[S_0(t)]^{exp(z\hat{\beta})}$$
 
 ```{r}
 basehaz(result.cox, centered=F)

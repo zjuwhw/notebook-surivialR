@@ -222,12 +222,169 @@ Published with <a href="https://github.com/rstudio/bookdown" target="blank">book
 <h1><span class="header-section-number">6</span> Model Selection and Interpretation<a href="model-selection-and-interpretation.html#model-selection-and-interpretation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="covariate-adjustment" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> Covariate Adjustment<a href="model-selection-and-interpretation.html#covariate-adjustment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Back to example 4.3 to illustrate the importance of covariate adjustment</p>
+<pre><code>### won&#39;t run. the data is simulated. see chapter 4
+### beta ia positive, increasing the risk
+coxph(Surv(ttAll, status)~trt)
+
+### beta changed to negative, decreaing the risk
+coxph(Surv(ttAll, status)~trt+strata(genotype))
+coxph(Surv(ttAll, status)~trt+genotype)</code></pre>
 </div>
 <div id="categorical-and-continuous-covariates" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> Categorical and Continuous Covariates<a href="model-selection-and-interpretation.html#categorical-and-continuous-covariates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>indicator or dummy variable: values 0 or 1</p>
+<p>categorical variables with three or more values, we need multiple dummy variables. one level is selected as a reference level, arbitrarily or driven by the goals of the research project.</p>
+<p>Let us say we have a set of k covariates, we can write the model</p>
+<p><span class="math display">\[log(\psi_i)=z_{1i}\beta_1+z_{2i}\beta_2+...+z_{ki}\beta_k\]</span></p>
+<ul>
+<li><p>the parameter <span class="math inline">\(\beta_j\)</span> is the log hazard ratio</p></li>
+<li><p>for continuous covariates, it represents the effect of a unit change in the covariate</p></li>
+<li><p>for dummy variables, it represents the effect of the corresponding level as compared to the reference covariate</p></li>
+<li><p>non-linear: consider fit a transformation of a covariate, e.g. logarithmic or square root; or “discretize”, such as “Age&lt;50”</p></li>
+<li><p>interaction</p></li>
+</ul>
+<p>Comparing with linear/logistic regression,</p>
+<ul>
+<li>time-related variables: here we only considering fixed at the begining of the trial (baseline)</li>
+<li>no intercept: “absorbed into the baseline hazard”</li>
+</ul>
+<p>Example 6.1</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="model-selection-and-interpretation.html#cb95-1" aria-hidden="true" tabindex="-1"></a>race <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;other&quot;</span>,</span>
+<span id="cb95-2"><a href="model-selection-and-interpretation.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;other&quot;</span>))</span>
+<span id="cb95-3"><a href="model-selection-and-interpretation.html#cb95-3" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">48</span>, <span class="dv">52</span>, <span class="dv">87</span>, <span class="dv">82</span>, <span class="dv">67</span>, <span class="dv">53</span>)</span>
+<span id="cb95-4"><a href="model-selection-and-interpretation.html#cb95-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-5"><a href="model-selection-and-interpretation.html#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(<span class="sc">~</span> race <span class="sc">+</span> age)[,<span class="sc">-</span><span class="dv">1</span>]</span></code></pre></div>
+<pre><code>##   raceother racewhite age
+## 1         0         0  48
+## 2         0         0  52
+## 3         0         1  87
+## 4         0         1  82
+## 5         1         0  67
+## 6         1         0  53</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="model-selection-and-interpretation.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="do">### taking white as the reference level</span></span>
+<span id="cb97-2"><a href="model-selection-and-interpretation.html#cb97-2" aria-hidden="true" tabindex="-1"></a>race <span class="ot">&lt;-</span> <span class="fu">relevel</span>(race, <span class="at">ref=</span><span class="st">&quot;white&quot;</span>)</span>
+<span id="cb97-3"><a href="model-selection-and-interpretation.html#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(<span class="sc">~</span> race <span class="sc">+</span> age)[,<span class="sc">-</span><span class="dv">1</span>]</span></code></pre></div>
+<pre><code>##   raceblack raceother age
+## 1         1         0  48
+## 2         1         0  52
+## 3         0         0  87
+## 4         0         0  82
+## 5         0         1  67
+## 6         0         1  53</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="model-selection-and-interpretation.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="do">## include an interaction: </span></span>
+<span id="cb99-2"><a href="model-selection-and-interpretation.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="do">## the product between race (first two columns) and age (third column)</span></span>
+<span id="cb99-3"><a href="model-selection-and-interpretation.html#cb99-3" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(<span class="sc">~</span> race <span class="sc">+</span> age <span class="sc">+</span> race<span class="sc">:</span>age)[,<span class="sc">-</span><span class="dv">1</span>]</span></code></pre></div>
+<pre><code>##   raceblack raceother age raceblack:age raceother:age
+## 1         1         0  48            48             0
+## 2         1         0  52            52             0
+## 3         0         0  87             0             0
+## 4         0         0  82             0             0
+## 5         0         1  67             0            67
+## 6         0         1  53             0            53</code></pre>
+<p>Example 6.2</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="model-selection-and-interpretation.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="do">### simulate the data</span></span>
+<span id="cb101-2"><a href="model-selection-and-interpretation.html#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="do">## age from 40 to 80</span></span>
+<span id="cb101-3"><a href="model-selection-and-interpretation.html#cb101-3" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n=</span><span class="dv">60</span>, <span class="at">min=</span><span class="dv">40</span>, <span class="at">max=</span><span class="dv">80</span>)</span>
+<span id="cb101-4"><a href="model-selection-and-interpretation.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="do">## race with three levels</span></span>
+<span id="cb101-5"><a href="model-selection-and-interpretation.html#cb101-5" aria-hidden="true" tabindex="-1"></a>race <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;white&quot;</span>, <span class="dv">20</span>), <span class="fu">rep</span>(<span class="st">&quot;black&quot;</span>, <span class="dv">20</span>), <span class="fu">rep</span>(<span class="st">&quot;other&quot;</span>, <span class="dv">20</span>)))</span>
+<span id="cb101-6"><a href="model-selection-and-interpretation.html#cb101-6" aria-hidden="true" tabindex="-1"></a>race <span class="ot">&lt;-</span> <span class="fu">relevel</span>(race, <span class="at">ref=</span><span class="st">&quot;white&quot;</span>)</span>
+<span id="cb101-7"><a href="model-selection-and-interpretation.html#cb101-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-8"><a href="model-selection-and-interpretation.html#cb101-8" aria-hidden="true" tabindex="-1"></a><span class="do">### simulate the survival by a exponential distribution</span></span>
+<span id="cb101-9"><a href="model-selection-and-interpretation.html#cb101-9" aria-hidden="true" tabindex="-1"></a><span class="do">### with the rate parameter</span></span>
+<span id="cb101-10"><a href="model-selection-and-interpretation.html#cb101-10" aria-hidden="true" tabindex="-1"></a>log.rate.vec <span class="ot">=</span> <span class="sc">-</span><span class="fl">4.5</span><span class="sc">+</span><span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">20</span>),<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">20</span>),<span class="fu">rep</span>(<span class="dv">2</span>,<span class="dv">20</span>))<span class="sc">+</span>age<span class="sc">*</span><span class="fl">0.05</span></span>
+<span id="cb101-11"><a href="model-selection-and-interpretation.html#cb101-11" aria-hidden="true" tabindex="-1"></a><span class="do">### and no censoring for the survival status</span></span>
+<span id="cb101-12"><a href="model-selection-and-interpretation.html#cb101-12" aria-hidden="true" tabindex="-1"></a>tt <span class="ot">=</span> <span class="fu">rexp</span>(<span class="at">n=</span><span class="dv">60</span>, <span class="at">rate=</span><span class="fu">exp</span>(log.rate.vec))</span>
+<span id="cb101-13"><a href="model-selection-and-interpretation.html#cb101-13" aria-hidden="true" tabindex="-1"></a>status <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">60</span>)</span>
+<span id="cb101-14"><a href="model-selection-and-interpretation.html#cb101-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-15"><a href="model-selection-and-interpretation.html#cb101-15" aria-hidden="true" tabindex="-1"></a><span class="do">### now fit a cox proportional hazards model</span></span>
+<span id="cb101-16"><a href="model-selection-and-interpretation.html#cb101-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb101-17"><a href="model-selection-and-interpretation.html#cb101-17" aria-hidden="true" tabindex="-1"></a>result.cox <span class="ot">=</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(tt, status)<span class="sc">~</span>race<span class="sc">+</span>age)</span>
+<span id="cb101-18"><a href="model-selection-and-interpretation.html#cb101-18" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(result.cox)</span></code></pre></div>
+<pre><code>## Call:
+## coxph(formula = Surv(tt, status) ~ race + age)
+## 
+##   n= 60, number of events= 60 
+## 
+##               coef exp(coef) se(coef)     z Pr(&gt;|z|)    
+## raceblack  1.05400   2.86909  0.35139 3.000 0.002704 ** 
+## raceother  2.34552  10.43875  0.43276 5.420 5.96e-08 ***
+## age        0.05201   1.05339  0.01359 3.827 0.000129 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##           exp(coef) exp(-coef) lower .95 upper .95
+## raceblack     2.869     0.3485     1.441     5.713
+## raceother    10.439     0.0958     4.470    24.379
+## age           1.053     0.9493     1.026     1.082
+## 
+## Concordance= 0.732  (se = 0.035 )
+## Likelihood ratio test= 37.89  on 3 df,   p=3e-08
+## Wald test            = 33.76  on 3 df,   p=2e-07
+## Score (logrank) test = 37.83  on 3 df,   p=3e-08</code></pre>
 </div>
 <div id="hypothesis-testing-for-nested-models" class="section level2 hasAnchor" number="6.3">
 <h2><span class="header-section-number">6.3</span> Hypothesis Testing for Nested Models<a href="model-selection-and-interpretation.html#hypothesis-testing-for-nested-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Nested models: the covariates of one model is a subset of the covariates in the other</p>
+<p>We can compare nested models using a (partial) likelihood ratio test</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="model-selection-and-interpretation.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(asaur)</span>
+<span id="cb103-2"><a href="model-selection-and-interpretation.html#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(pharmacoSmoking)</span></code></pre></div>
+<pre><code>## The following objects are masked _by_ .GlobalEnv:
+## 
+##     age, race</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="model-selection-and-interpretation.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="do">## model A: ageGroup4</span></span>
+<span id="cb105-2"><a href="model-selection-and-interpretation.html#cb105-2" aria-hidden="true" tabindex="-1"></a>modelA.coxph <span class="ot">=</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(ttr, relapse)<span class="sc">~</span>ageGroup4)</span>
+<span id="cb105-3"><a href="model-selection-and-interpretation.html#cb105-3" aria-hidden="true" tabindex="-1"></a>modelA.coxph</span></code></pre></div>
+<pre><code>## Call:
+## coxph(formula = Surv(ttr, relapse) ~ ageGroup4)
+## 
+##                   coef exp(coef) se(coef)      z      p
+## ageGroup435-49  0.0293    1.0297   0.3093  0.095 0.9245
+## ageGroup450-64 -0.7914    0.4532   0.3361 -2.355 0.0185
+## ageGroup465+   -0.3173    0.7281   0.4435 -0.715 0.4744
+## 
+## Likelihood ratio test=12.22  on 3 df, p=0.006664
+## n= 125, number of events= 89</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="model-selection-and-interpretation.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="do">## model B: employment</span></span>
+<span id="cb107-2"><a href="model-selection-and-interpretation.html#cb107-2" aria-hidden="true" tabindex="-1"></a>modelB.coxph <span class="ot">=</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(ttr, relapse)<span class="sc">~</span>employment)</span>
+<span id="cb107-3"><a href="model-selection-and-interpretation.html#cb107-3" aria-hidden="true" tabindex="-1"></a>modelB.coxph</span></code></pre></div>
+<pre><code>## Call:
+## coxph(formula = Surv(ttr, relapse) ~ employment)
+## 
+##                   coef exp(coef) se(coef)     z     p
+## employmentother 0.1982    1.2192   0.2371 0.836 0.403
+## employmentpt    0.4500    1.5683   0.3229 1.394 0.163
+## 
+## Likelihood ratio test=2.06  on 2 df, p=0.357
+## n= 125, number of events= 89</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="model-selection-and-interpretation.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="do">## model C: ageGroup4+employment</span></span>
+<span id="cb109-2"><a href="model-selection-and-interpretation.html#cb109-2" aria-hidden="true" tabindex="-1"></a>modelC.coxph <span class="ot">=</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(ttr, relapse)<span class="sc">~</span>ageGroup4<span class="sc">+</span>employment)</span>
+<span id="cb109-3"><a href="model-selection-and-interpretation.html#cb109-3" aria-hidden="true" tabindex="-1"></a>modelC.coxph</span></code></pre></div>
+<pre><code>## Call:
+## coxph(formula = Surv(ttr, relapse) ~ ageGroup4 + employment)
+## 
+##                    coef exp(coef) se(coef)      z       p
+## ageGroup435-49  -0.1299    0.8782   0.3213 -0.404 0.68594
+## ageGroup450-64  -1.0239    0.3592   0.3585 -2.856 0.00429
+## ageGroup465+    -0.7825    0.4573   0.5046 -1.551 0.12102
+## employmentother  0.5257    1.6917   0.2748  1.913 0.05577
+## employmentpt     0.5001    1.6489   0.3315  1.508 0.13143
+## 
+## Likelihood ratio test=16.79  on 5 df, p=0.004922
+## n= 125, number of events= 89</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="model-selection-and-interpretation.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="do">### log-likelihood</span></span>
+<span id="cb111-2"><a href="model-selection-and-interpretation.html#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(modelA.coxph)</span></code></pre></div>
+<pre><code>## &#39;log Lik.&#39; -380.043 (df=3)</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="model-selection-and-interpretation.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(modelB.coxph)</span></code></pre></div>
+<pre><code>## &#39;log Lik.&#39; -385.1232 (df=2)</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="model-selection-and-interpretation.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(modelC.coxph)</span></code></pre></div>
+<pre><code>## &#39;log Lik.&#39; -377.7597 (df=5)</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="model-selection-and-interpretation.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="do">### model A vs model C</span></span>
+<span id="cb117-2"><a href="model-selection-and-interpretation.html#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="dv">2</span><span class="sc">*</span>(<span class="fu">as.numeric</span>(<span class="fu">logLik</span>(modelC.coxph))<span class="sc">-</span><span class="fu">as.numeric</span>(<span class="fu">logLik</span>(modelA.coxph))), <span class="at">df=</span><span class="dv">5-3</span>, <span class="at">lower.tail=</span>F)</span></code></pre></div>
+<pre><code>## [1] 0.1019462</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="model-selection-and-interpretation.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="do">### model B vs model C</span></span>
+<span id="cb119-2"><a href="model-selection-and-interpretation.html#cb119-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="dv">2</span><span class="sc">*</span>(<span class="fu">as.numeric</span>(<span class="fu">logLik</span>(modelC.coxph))<span class="sc">-</span><span class="fu">as.numeric</span>(<span class="fu">logLik</span>(modelB.coxph))), <span class="at">df=</span><span class="dv">5-2</span>, <span class="at">lower.tail=</span>F)</span></code></pre></div>
+<pre><code>## [1] 0.002065407</code></pre>
 </div>
 <div id="the-akaike-information-criterion-for-comparing-non-nested-models" class="section level2 hasAnchor" number="6.4">
 <h2><span class="header-section-number">6.4</span> The Akaike Information Criterion for Comparing Non-nested Models<a href="model-selection-and-interpretation.html#the-akaike-information-criterion-for-comparing-non-nested-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>

@@ -2,9 +2,113 @@
 
 ## Covariate Adjustment
 
+Back to example 4.3 to illustrate the importance of covariate adjustment
+
+```
+### won't run. the data is simulated. see chapter 4
+### beta ia positive, increasing the risk
+coxph(Surv(ttAll, status)~trt)
+
+### beta changed to negative, decreaing the risk
+coxph(Surv(ttAll, status)~trt+strata(genotype))
+coxph(Surv(ttAll, status)~trt+genotype)
+```
+
 ## Categorical and Continuous Covariates
 
+indicator or dummy variable: values 0 or 1
+
+categorical variables with three or more values, we need multiple dummy variables. one level is selected as a reference level, arbitrarily or driven by the goals of the research project.
+
+Let us say we have a set of k covariates, we can write the model
+
+$$log(\psi_i)=z_{1i}\beta_1+z_{2i}\beta_2+...+z_{ki}\beta_k$$
+
+- the parameter $\beta_j$ is the log hazard ratio
+- for continuous covariates, it represents the effect of a unit change in the covariate
+- for dummy variables, it represents the effect of the corresponding level as compared to the reference covariate
+
+- non-linear: consider fit a transformation of a covariate, e.g. logarithmic or square root; or "discretize", such as "Age<50"
+- interaction
+
+Comparing with linear/logistic regression,
+
+- time-related variables: here we only considering fixed at the begining of the trial (baseline)
+- no intercept: "absorbed into the baseline hazard"
+
+Example 6.1
+
+```{r}
+race <- factor(c("black", "black", "white", "white", "other",
+"other"))
+age <- c(48, 52, 87, 82, 67, 53)
+
+model.matrix(~ race + age)[,-1]
+
+### taking white as the reference level
+race <- relevel(race, ref="white")
+model.matrix(~ race + age)[,-1]
+
+## include an interaction: 
+## the product between race (first two columns) and age (third column)
+model.matrix(~ race + age + race:age)[,-1]
+```
+
+Example 6.2
+
+```{r}
+### simulate the data
+## age from 40 to 80
+age <- runif(n=60, min=40, max=80)
+## race with three levels
+race <- factor(c(rep("white", 20), rep("black", 20), rep("other", 20)))
+race <- relevel(race, ref="white")
+
+### simulate the survival by a exponential distribution
+### with the rate parameter
+log.rate.vec = -4.5+c(rep(0,20),rep(1,20),rep(2,20))+age*0.05
+### and no censoring for the survival status
+tt = rexp(n=60, rate=exp(log.rate.vec))
+status = rep(1,60)
+
+### now fit a cox proportional hazards model
+library(survival)
+result.cox = coxph(Surv(tt, status)~race+age)
+summary(result.cox)
+```
+
 ## Hypothesis Testing for Nested Models
+
+Nested models: the covariates of one model is a subset of the covariates in the other
+
+We can compare nested models using a (partial) likelihood ratio test
+
+```{r}
+library(asaur)
+attach(pharmacoSmoking)
+## model A: ageGroup4
+modelA.coxph = coxph(Surv(ttr, relapse)~ageGroup4)
+modelA.coxph
+
+## model B: employment
+modelB.coxph = coxph(Surv(ttr, relapse)~employment)
+modelB.coxph
+
+## model C: ageGroup4+employment
+modelC.coxph = coxph(Surv(ttr, relapse)~ageGroup4+employment)
+modelC.coxph
+
+### log-likelihood
+logLik(modelA.coxph)
+logLik(modelB.coxph)
+logLik(modelC.coxph)
+
+### model A vs model C
+pchisq(2*(as.numeric(logLik(modelC.coxph))-as.numeric(logLik(modelA.coxph))), df=5-3, lower.tail=F)
+
+### model B vs model C
+pchisq(2*(as.numeric(logLik(modelC.coxph))-as.numeric(logLik(modelB.coxph))), df=5-2, lower.tail=F)
+```
 
 ## The Akaike Information Criterion for Comparing Non-nested Models
 
