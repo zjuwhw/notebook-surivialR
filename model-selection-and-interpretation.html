@@ -385,6 +385,21 @@ coxph(Surv(ttAll, status)~trt+genotype)</code></pre>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="model-selection-and-interpretation.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="do">### model B vs model C</span></span>
 <span id="cb119-2"><a href="model-selection-and-interpretation.html#cb119-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="dv">2</span><span class="sc">*</span>(<span class="fu">as.numeric</span>(<span class="fu">logLik</span>(modelC.coxph))<span class="sc">-</span><span class="fu">as.numeric</span>(<span class="fu">logLik</span>(modelB.coxph))), <span class="at">df=</span><span class="dv">5-2</span>, <span class="at">lower.tail=</span>F)</span></code></pre></div>
 <pre><code>## [1] 0.002065407</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="model-selection-and-interpretation.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="do">### model A vs null</span></span>
+<span id="cb121-2"><a href="model-selection-and-interpretation.html#cb121-2" aria-hidden="true" tabindex="-1"></a>model.null.coxph <span class="ot">=</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(ttr, relapse)<span class="sc">~</span><span class="dv">1</span>)</span>
+<span id="cb121-3"><a href="model-selection-and-interpretation.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(model.null.coxph)</span></code></pre></div>
+<pre><code>## &#39;log Lik.&#39; -386.1533 (df=0)</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="model-selection-and-interpretation.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="dv">2</span><span class="sc">*</span>(<span class="fu">as.numeric</span>(<span class="fu">logLik</span>(modelA.coxph))<span class="sc">-</span><span class="fu">as.numeric</span>(<span class="fu">logLik</span>(model.null.coxph))), <span class="at">df=</span><span class="dv">3-0</span>, <span class="at">lower.tail=</span>F)</span></code></pre></div>
+<pre><code>## [1] 0.006664492</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="model-selection-and-interpretation.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="do">### the anova() function is a more direct way</span></span>
+<span id="cb125-2"><a href="model-selection-and-interpretation.html#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(modelA.coxph, modelC.coxph)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table
+##  Cox model: response is  Surv(ttr, relapse)
+##  Model 1: ~ ageGroup4
+##  Model 2: ~ ageGroup4 + employment
+##    loglik  Chisq Df Pr(&gt;|Chi|)
+## 1 -380.04                     
+## 2 -377.76 4.5666  2     0.1019</code></pre>
 </div>
 <div id="the-akaike-information-criterion-for-comparing-non-nested-models" class="section level2 hasAnchor" number="6.4">
 <h2><span class="header-section-number">6.4</span> The Akaike Information Criterion for Comparing Non-nested Models<a href="model-selection-and-interpretation.html#the-akaike-information-criterion-for-comparing-non-nested-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>

@@ -108,6 +108,14 @@ pchisq(2*(as.numeric(logLik(modelC.coxph))-as.numeric(logLik(modelA.coxph))), df
 
 ### model B vs model C
 pchisq(2*(as.numeric(logLik(modelC.coxph))-as.numeric(logLik(modelB.coxph))), df=5-2, lower.tail=F)
+
+### model A vs null
+model.null.coxph = coxph(Surv(ttr, relapse)~1)
+logLik(model.null.coxph)
+pchisq(2*(as.numeric(logLik(modelA.coxph))-as.numeric(logLik(model.null.coxph))), df=3-0, lower.tail=F)
+
+### the anova() function is a more direct way
+anova(modelA.coxph, modelC.coxph)
 ```
 
 ## The Akaike Information Criterion for Comparing Non-nested Models
